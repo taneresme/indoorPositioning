@@ -1,0 +1,52 @@
+*.class
+bin/
+obj/
+.vscode/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Backup files
+*~
+
+# intellij
+.idea/
+*.iml
+*.ipr
+*.iws
+publish.properties
+.mvn/
+
+# eclipse
+.factorypath
+.classpath
+.project
+.settings/
+
+# maven
+target/
+out/
+
+# gradle
+build/
+.gradle/
+
+# virtual machine crash logs
+hs_err_pid*
+
+# maven shade plugin
+dependency-reduced-pom.xml
+
+# maven release plugin
+pom.xml.releaseBackup
+release.properties
+
+log/
+*.log
+
+#Sensitive Configuration files
+app_config/
+db/
+confidential/
