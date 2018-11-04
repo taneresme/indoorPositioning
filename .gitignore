@@ -2,6 +2,7 @@
 bin/
 obj/
 .vscode/
+.vs/
 
 # Package Files #
 *.jar
