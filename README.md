@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.org/taneresme/indoorPositioning.png?branch=master)](https://travis-ci.org/taneresme/indoorPositioning)
+[![Build Status](https://travis-ci.com/taneresme/indoorPositioning.png?branch=master)](https://travis-ci.com/taneresme/indoorPositioning)
 
 # indoorPositioning
