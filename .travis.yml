@@ -1,0 +1,10 @@
+language: csharp
+solution: IndoorPositioning.sln
+mono: none
+dotnet: 2.1.403
+script:
+ - dotnet restore
+#Codecov integration
+#script: "mvn cobertura:cobertura"
+#after_success:
+#  - bash <(curl -s https://codecov.io/bash)
