@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace IndoorPositioning.Backend.WebApi
+namespace IndoorPositioning.Consumer.Api
 {
     public class Startup
     {

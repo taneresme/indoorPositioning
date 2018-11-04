@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace IndoorPositioning.Backend.WebApi
+namespace IndoorPositioning.Consumer.Api
 {
     public class Program
     {

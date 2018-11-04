@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2</TargetFramework>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\IndoorPositioning.Beacon.Core\IndoorPositioning.Beacon.Core.csproj" />
   </ItemGroup>

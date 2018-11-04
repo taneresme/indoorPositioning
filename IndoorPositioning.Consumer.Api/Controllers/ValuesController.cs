@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IndoorPositioning.Backend.WebApi.Controllers
+namespace IndoorPositioning.Consumer.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
