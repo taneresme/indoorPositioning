@@ -8,6 +8,7 @@ obj/
 *.jar
 *.war
 *.ear
+AppPackages/
 
 # Backup files
 *~
@@ -51,3 +52,4 @@ log/
 app_config/
 db/
 confidential/
+*.pfx
