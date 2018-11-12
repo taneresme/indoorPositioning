@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndoorPositioning.Web", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndoorPositioning.Beacon.Bluetooth", "IndoorPositioning.Beacon.Bluetooth\IndoorPositioning.Beacon.Bluetooth.csproj", "{10BB7B71-2CF5-4F0B-8E6D-7CE8F994C32F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndoorPositioning.Raspberry.Scanner", "IndoorPositioning.Raspberry.Scanner\IndoorPositioning.Raspberry.Scanner.csproj", "{11600523-C0B8-41C0-B328-A980A7D56C25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndoorPositioning.Raspberry.Scanner", "IndoorPositioning.Raspberry.Scanner\IndoorPositioning.Raspberry.Scanner.csproj", "{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,28 +89,26 @@ Global
 		{10BB7B71-2CF5-4F0B-8E6D-7CE8F994C32F}.Release|x64.Build.0 = Release|x64
 		{10BB7B71-2CF5-4F0B-8E6D-7CE8F994C32F}.Release|x86.ActiveCfg = Release|x86
 		{10BB7B71-2CF5-4F0B-8E6D-7CE8F994C32F}.Release|x86.Build.0 = Release|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|Any CPU.ActiveCfg = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|Any CPU.Build.0 = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|Any CPU.Deploy.0 = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|ARM.ActiveCfg = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|ARM.Build.0 = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|ARM.Deploy.0 = Debug|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x64.ActiveCfg = Debug|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x64.Build.0 = Debug|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x64.Deploy.0 = Debug|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x86.ActiveCfg = Debug|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x86.Build.0 = Debug|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Debug|x86.Deploy.0 = Debug|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|Any CPU.ActiveCfg = Release|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|ARM.ActiveCfg = Release|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|ARM.Build.0 = Release|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|ARM.Deploy.0 = Release|ARM
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x64.ActiveCfg = Release|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x64.Build.0 = Release|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x64.Deploy.0 = Release|x64
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x86.ActiveCfg = Release|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x86.Build.0 = Release|x86
-		{11600523-C0B8-41C0-B328-A980A7D56C25}.Release|x86.Deploy.0 = Release|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|ARM.Build.0 = Debug|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|ARM.Deploy.0 = Debug|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x64.ActiveCfg = Debug|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x64.Build.0 = Debug|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x64.Deploy.0 = Debug|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x86.ActiveCfg = Debug|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x86.Build.0 = Debug|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Debug|x86.Deploy.0 = Debug|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|Any CPU.ActiveCfg = Release|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|ARM.ActiveCfg = Release|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|ARM.Build.0 = Release|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|ARM.Deploy.0 = Release|ARM
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x64.ActiveCfg = Release|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x64.Build.0 = Release|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x64.Deploy.0 = Release|x64
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x86.ActiveCfg = Release|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x86.Build.0 = Release|x86
+		{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
