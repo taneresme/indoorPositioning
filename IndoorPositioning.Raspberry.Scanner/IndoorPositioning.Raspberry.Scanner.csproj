@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{DB06D17F-BDA2-4608-95FB-25DC09B56F5E}</ProjectGuid>
+    <ProjectGuid>{CC1E2033-E6EF-409B-BFBB-5143429D9A58}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IndoorPositioning.Raspberry.Scanner</RootNamespace>
@@ -132,6 +132,16 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.9</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IndoorPositioning.Beacon.Bluetooth\IndoorPositioning.Beacon.Bluetooth.csproj">
+      <Project>{10bb7b71-2cf5-4f0b-8e6d-7ce8f994c32f}</Project>
+      <Name>IndoorPositioning.Beacon.Bluetooth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IndoorPositioning.Beacon.Core\IndoorPositioning.Beacon.Core.csproj">
+      <Project>{62BA2DF4-D834-4F68-B87C-A9493E6E9EC6}</Project>
+      <Name>IndoorPositioning.Beacon.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">
     <VisualStudioVersion>15.0</VisualStudioVersion>

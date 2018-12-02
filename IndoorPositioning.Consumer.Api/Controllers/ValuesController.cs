@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,8 +10,11 @@ namespace IndoorPositioning.Consumer.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class LoggerController : ControllerBase
     {
+        private static string logFile = "raspberry-logs.log";
+        private static FileStream file = System.IO.File.OpenWrite(logFile);
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -26,8 +31,10 @@ namespace IndoorPositioning.Consumer.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Log log)
         {
+            byte[] bytes = Encoding.Default.GetBytes(log.ToString());
+            file.Write(bytes);
         }
 
         // PUT api/values/5
@@ -40,6 +47,16 @@ namespace IndoorPositioning.Consumer.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+    }
+
+    public class Log
+    {
+        public string log { get; set; }
+
+        public override string ToString()
+        {
+            return $"{{log : {log}}}{Environment.NewLine}";
         }
     }
 }

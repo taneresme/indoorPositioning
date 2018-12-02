@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
   <Identity Name="IndoorPositioning.Raspberry.Scanner-uwp" Publisher="CN=TANER" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="6dea7ca4-65b1-44c9-a081-7ace5d4ea1d0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <mp:PhoneIdentity PhoneProductId="2d4bce8a-5d38-48e6-8101-4b142f0ea306" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>IndoorPositioning.Raspberry.Scanner</DisplayName>
     <PublisherDisplayName>TANER</PublisherDisplayName>
