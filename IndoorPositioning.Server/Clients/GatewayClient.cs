@@ -2,6 +2,7 @@
 using IndoorPositioning.Server.Database.Model;
 using IndoorPositioning.Server.Logging;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Net.Sockets;
 
 namespace IndoorPositioning.Server.Clients
@@ -35,46 +36,63 @@ namespace IndoorPositioning.Server.Clients
                     string gatewayType = dataItems[0];
                     string beaconMac = dataItems[1];
                     string gatewayMac = dataItems[2];
-                    string rssi = dataItems[3];
+                    int rssi = int.Parse(dataItems[3]);
                     string additionalData = dataItems[4];
 
-                    /* Check the GW */
-                    GatewayDao gatewayDao = new GatewayDao();
-                    Gateway gateway = gatewayDao.GetGateway(gatewayMac);
-                    if (gateway == null)
-                    {
-                        /* There is no definition for this GW. 
-                         * Create a new gateway record */
-                        gateway = new Gateway()
-                        {
-                            GatewayType = gatewayType,
-                            MACAddress = gatewayMac,
-                        };
-
-                        /* save new gateway */
-                        gatewayDao.NewGateway(gateway);
-                    }
-
-                    /* Check the beacon */
-                    BeaconDao beaconDao = new BeaconDao();
-                    Beacon beacon = beaconDao.GetBeacon(beaconMac);
-                    if (beacon == null)
-                    {
-                        /* There is no definition for this beacon. 
-                        * Create a new beacon record */
-                        beacon = new Beacon()
-                        {
-                            MACAddress = beaconMac,
-                        };
-
-                        /* save new gateway */
-                        gatewayDao.NewGateway(gateway);
-                    }
+                    CheckGateway(gatewayMac, gatewayType);
+                    CheckBeacon(beaconMac, rssi);
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     LOGGER.LogError(ex.ToString());
                 }
+            }
+        }
+
+        private void CheckGateway(string gatewayMac, string gatewayType)
+        {
+            /* Check the GW */
+            GatewayDao gatewayDao = new GatewayDao();
+            Gateway gateway = gatewayDao.GetGateway(gatewayMac);
+            if (gateway == null)
+            {
+                /* There is no definition for this GW. 
+                 * Create a new gateway record */
+                gateway = new Gateway()
+                {
+                    GatewayType = gatewayType,
+                    MACAddress = gatewayMac,
+                };
+
+                /* save new gateway */
+                gatewayDao.NewGateway(gateway);
+            }
+        }
+
+        private void CheckBeacon(string beaconMac, int rssi)
+        {
+            /* Check the beacon */
+            BeaconDao beaconDao = new BeaconDao();
+            Beacon beacon = beaconDao.GetBeacon(beaconMac);
+            if (beacon == null)
+            {
+                /* There is no definition for this beacon. 
+                * Create a new beacon record */
+                beacon = new Beacon()
+                {
+                    MACAddress = beaconMac,
+                    LastRssi = rssi,
+                };
+
+                /* save new beacon */
+                beaconDao.NewBeacon(beacon);
+            }
+            else
+            {
+                /* Update beacon */
+                beacon.LastSignalTimestamp = DateTime.Now;
+                beacon.LastRssi = rssi;
+                beaconDao.UpdateBeacon(beacon);
             }
         }
     }
