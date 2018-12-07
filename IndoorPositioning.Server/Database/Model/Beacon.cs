@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace IndoorPositioning.Server.Database
+namespace IndoorPositioning.Server.Database.Model
 {
-    public class BeaconEntity
+    public class Beacon
     {
         public int BeaconId { get; set; }
         public string Name { get; set; }

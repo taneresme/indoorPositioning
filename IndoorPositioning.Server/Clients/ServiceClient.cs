@@ -1,11 +1,18 @@
-﻿using System.Net.Sockets;
+﻿using IndoorPositioning.Server.Logging;
+using Microsoft.Extensions.Logging;
+using System.Net.Sockets;
 
 namespace IndoorPositioning.Server.Clients
 {
     public class ServiceClient : Client
     {
+        private ILogger LOGGER = Logger.CreateLogger<ServiceClient>();
+
         /* Locker object */
         private static readonly object locker = new object();
+
+        /* Stores data */
+        private string[] splittedData;
 
         public ServiceClient(TcpClient tcpClient) : base(tcpClient)
         {
@@ -18,14 +25,29 @@ namespace IndoorPositioning.Server.Clients
             /* Locking the operation just in case. */
             lock (locker)
             {
-                if (data == null) return;
+                try
+                {
+                    if (data == null) return;
+                    data = data.ToLower();
 
-                data = data.ToLower();
+                    if (data.StartsWith("echo")) Echo(data);
+                    else if (data.StartsWith("get ")) Get(data);
+                    else Send("Command not found!");
+                }
+                catch (System.Exception ex)
+                {
+                    LOGGER.LogError(ex.ToString());
 
-                if (data.StartsWith("echo")) Echo(data);
-                else if (data.StartsWith("get")) Get(data);
-                else Send("Command not found!");
+                    try { Send("An exception occured, check the server logs!"); }
+                    catch { }
+                }
             }
+        }
+
+        private bool CheckData(string data, int length)
+        {
+            splittedData = data.Split(' ');
+            return splittedData.Length >= length;
         }
 
         private void Echo(string data)
@@ -35,16 +57,16 @@ namespace IndoorPositioning.Server.Clients
 
         private void Get(string data)
         {
-            string response = "";
-            string[] param = data.Split(' ');
-            if (param.Length < 2)
+            /* Check the data received if valid */
+            if (!CheckData(data, 2))
             {
                 Send("Invalid parameters!");
                 return;
             }
-            if (param[1] == "beacons")
+            /* Returns server mode (fingerprinting or positioning) */
+            if (splittedData[1] == "mode")
             {
-
+                Send(Server.ServerMode.ToString());
             }
         }
     }

@@ -3,7 +3,6 @@ using IndoorPositioning.Server.Enums;
 using IndoorPositioning.Server.Listener;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 
 namespace IndoorPositioning.Server
 {

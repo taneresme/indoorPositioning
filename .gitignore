@@ -53,3 +53,4 @@ app_config/
 db/
 confidential/
 *.pfx
+migrations/
