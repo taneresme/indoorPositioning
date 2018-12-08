@@ -53,12 +53,24 @@ namespace IndoorPositioning.Server.Database.Dao
             }
         }
 
-        /* Updates new gateway */
+        /* Updates the given gateway */
         public Gateway UpdateGateway(Gateway gateway)
         {
             using (IndoorPositioningContext db = new IndoorPositioningContext())
             {
                 db.Gateways.Update(gateway);
+                db.SaveChanges();
+
+                return gateway;
+            }
+        }
+
+        /* Deletes the given gateway */
+        public Gateway DeleteGateway(Gateway gateway)
+        {
+            using (IndoorPositioningContext db = new IndoorPositioningContext())
+            {
+                db.Gateways.Remove(gateway);
                 db.SaveChanges();
 
                 return gateway;

@@ -54,7 +54,16 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Last Rssi: " />
                     <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtLastRssi" />
                 </Grid>
-                <Button Grid.Row="2" x:Name="btnUpdate" HorizontalAlignment="Right" Content="Update" Click="btnUpdate_Click" />
+
+                <Grid Grid.Row="2" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" x:Name="btnUpdate" Content="Update" Click="btnUpdate_Click" />
+                    <Button Grid.Column="1" x:Name="btnDelete" Content="Delete" Click="btnDelete_Click" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

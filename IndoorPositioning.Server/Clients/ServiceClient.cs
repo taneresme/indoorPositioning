@@ -38,6 +38,7 @@ namespace IndoorPositioning.Server.Clients
                     else if (inData.StartsWith("get ")) Get(data);
                     else if (inData.StartsWith("update ")) Update(data);
                     else if (inData.StartsWith("set ")) Set(data);
+                    else if (inData.StartsWith("delete ")) Delete(data);
                     else Send(UNKNOWN_COMMAND_ERROR);
                 }
                 catch (System.Exception ex)
@@ -74,6 +75,11 @@ namespace IndoorPositioning.Server.Clients
         private void Set(string data)
         {
             new SetService(this).Service(data);
+        }
+
+        private void Delete(string data)
+        {
+            new DeleteService(this).Service(data);
         }
     }
 }

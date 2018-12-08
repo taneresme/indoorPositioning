@@ -79,5 +79,27 @@ namespace IndoorPositioning.UI.Components
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure to delete this?", "WARNING!", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No) { return; }
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                Beacon beacon = (Beacon)lstBeacons.SelectedItem;
+                IndoorPositioningClient.DeleteBeacon(beacon);
+
+                /* Load the list again */
+                Load();
+                Mouse.OverrideCursor = Cursors.Arrow;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }

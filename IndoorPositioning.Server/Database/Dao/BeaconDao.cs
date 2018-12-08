@@ -53,12 +53,24 @@ namespace IndoorPositioning.Server.Database.Dao
             }
         }
 
-        /* Updates new beacon */
+        /* Updates the given beacon */
         public Beacon UpdateBeacon(Beacon beacon)
         {
             using (IndoorPositioningContext db = new IndoorPositioningContext())
             {
                 db.Beacons.Update(beacon);
+                db.SaveChanges();
+
+                return beacon;
+            }
+        }
+
+        /* Deletes the given beacon */
+        public Beacon DeleteBeacon(Beacon beacon)
+        {
+            using (IndoorPositioningContext db = new IndoorPositioningContext())
+            {
+                db.Beacons.Remove(beacon);
                 db.SaveChanges();
 
                 return beacon;

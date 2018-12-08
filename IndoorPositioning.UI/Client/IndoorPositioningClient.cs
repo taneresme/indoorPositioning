@@ -12,6 +12,8 @@ namespace IndoorPositioning.UI.Client
         private const string GET_BEACONS_COMMAND = "get beacons";
         private const string UPDATE_GATEWAY_COMMAND = "update gateway ";
         private const string UPDATE_BEACON_COMMAND = "update beacon ";
+        private const string DELETE_GATEWAY_COMMAND = "delete gateway ";
+        private const string DELETE_BEACON_COMMAND = "delete beacon ";
 
         /* gets gateways from server */
         public static List<Gateway> GetGateways()
@@ -57,12 +59,41 @@ namespace IndoorPositioning.UI.Client
                 throw new Exception(json);
             }
         }
+
         /* sends the update-beacon request to the server */
         public static void UpdateBeacon(Beacon beacon)
         {
             string json = JsonConvert.SerializeObject(beacon);
 
             TcpConsumer.Instance.Send(UPDATE_BEACON_COMMAND + json);
+            string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
+
+            if (result.StartsWith("error"))
+            {
+                throw new Exception(json);
+            }
+        }
+
+        /* sends the delete-gateway request to the server */
+        public static void DeleteGateway(Gateway gateway)
+        {
+            string json = JsonConvert.SerializeObject(gateway);
+
+            TcpConsumer.Instance.Send(DELETE_GATEWAY_COMMAND + json);
+            string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
+
+            if (result.StartsWith("error"))
+            {
+                throw new Exception(json);
+            }
+        }
+
+        /* sends the delete-beacon request to the server */
+        public static void DeleteBeacon(Beacon beacon)
+        {
+            string json = JsonConvert.SerializeObject(beacon);
+
+            TcpConsumer.Instance.Send(DELETE_BEACON_COMMAND + json);
             string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
 
             if (result.StartsWith("error"))

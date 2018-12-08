@@ -77,5 +77,27 @@ namespace IndoorPositioning.UI.Components
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure to delete this?", "WARNING!", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No) { return; }
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                Gateway gateway = (Gateway)lstGateways.SelectedItem;
+                IndoorPositioningClient.DeleteGateway(gateway);
+
+                /* Load the list again */
+                Load();
+                Mouse.OverrideCursor = Cursors.Arrow;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
