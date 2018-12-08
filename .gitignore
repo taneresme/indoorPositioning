@@ -9,6 +9,7 @@ obj/
 *.war
 *.ear
 AppPackages/
+packages/
 
 # Backup files
 *~
