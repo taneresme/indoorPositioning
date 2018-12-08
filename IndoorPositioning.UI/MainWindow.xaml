@@ -1,0 +1,27 @@
+﻿<Window x:Class="IndoorPositioning.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IndoorPositioning.UI"
+        mc:Ignorable="d"
+        Title="Indoor Positioning" Height="450" Width="800">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Menu DockPanel.Dock="Top" x:Name="menu">
+                <MenuItem Header="Map" x:Name="mnItemMap" />
+                <MenuItem Header="Gateways" x:Name="mnItemGateways" Click="mnItemGateways_Click" />
+                <MenuItem Header="Beacons" x:Name="mnItemBeacons" Click="mnItemBeacons_Click" />
+            </Menu>
+
+            <ContentControl x:Name="content" />
+
+            <!--<Grid>
+                <TextBlock x:Name="txtEmptyScreen" Text="Please use menu for screens!" HorizontalAlignment="Center" />
+                <local:MapScreen x:Name="screenMap" Visibility="Collapsed" />
+                <local:BeaconsScreen x:Name="screenBeacons" Visibility="Collapsed" />
+                <local:GatewaysScreen x:Name="screenGateways" Visibility="Collapsed" />
+            </Grid>-->
+        </DockPanel>
+    </Grid>
+</Window>

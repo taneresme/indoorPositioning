@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace IndoorPositioning.Server.Clients
 {
@@ -11,6 +12,8 @@ namespace IndoorPositioning.Server.Clients
     public abstract class Client : IDisposable
     {
         private ILogger LOGGER = Logger.CreateLogger<Client>();
+
+        private Thread thread;
 
         /* ConnectionClosed event definition */
         public event ConnectionClosedEventHandler ConnectionClosed;
@@ -68,6 +71,8 @@ namespace IndoorPositioning.Server.Clients
         /* Sends the given data */
         public void Send(String data)
         {
+            LOGGER.LogError("Sending Data: " + data);
+
             if (TcpClient == null)
                 throw new Exception("tcpClient cannot be null!");
 
@@ -119,6 +124,15 @@ namespace IndoorPositioning.Server.Clients
         /* Initiates a receiving thread */
         public void BeginReceive()
         {
+            thread = new Thread(Receive)
+            {
+                IsBackground = true
+            };
+            thread.Start();
+        }
+
+        private void Receive()
+        {
             try
             {
                 /* ıf it is already in receiving mode then return */
@@ -142,63 +156,22 @@ namespace IndoorPositioning.Server.Clients
                     }
                 }
             }
+            catch (ThreadAbortException) { }
+            catch (SocketException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("ErrorCode: " + ex.ErrorCode)
+                    .AppendLine("NativeErrorCode: " + ex.NativeErrorCode)
+                    .AppendLine("SocketErrorCode: " + ex.SocketErrorCode)
+                    .AppendLine("Source: " + ex.Source)
+                    .AppendLine(ex.ToString());
+                LOGGER.LogError(sb.ToString());
+            }
             catch (Exception ex)
             {
                 LOGGER.LogError(ex.ToString());
             }
         }
-
-        ///* Initiates a receiving thread */
-        //public void BeginReceive()
-        //{
-        //    try
-        //    {
-        //        TcpStateObject stateObject = new TcpStateObject();
-        //        stateObject.Socket = tcpClient.Client;
-
-        //        TcpClient.Client.BeginReceive(stateObject.Buffer, 0, stateObject.BufferSize,
-        //            SocketFlags.None, ReceivedCallback, stateObject);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LOGGER.LogError(ex.ToString());
-        //        throw;
-        //    }
-        //}
-
-        /* Callback method when the receiving action completed */
-        //private void ReceivedCallback(IAsyncResult asyncResult)
-        //{
-        //    try
-        //    {
-        //        TcpStateObject stateObject = (TcpStateObject)asyncResult.AsyncState;
-        //        Socket socket = stateObject.Socket;
-
-        //        int bytesRead = socket.EndReceive(asyncResult);
-        //        /* If there is more data to read */
-        //        if (bytesRead > 0)
-        //        {
-        //            /* Save the current data */
-        //            stateObject.Data.Append(Encoding.ASCII.GetString(stateObject.Buffer));
-
-        //            /* Start receiving again */
-        //            TcpClient.Client.BeginReceive(stateObject.Buffer, 0, stateObject.BufferSize,
-        //                SocketFlags.None, ReceivedCallback, stateObject);
-        //        }
-        //        else
-        //        {
-        //            if (stateObject.Data.Length > 0)
-        //            {
-        //                DataReceived(stateObject.Data.ToString());
-        //            }
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LOGGER.LogError(ex.ToString());
-        //    }
-        //}
 
         /* Closes the Client's connection */
         private bool isClosed = false; // To detect redundant calls
@@ -206,9 +179,15 @@ namespace IndoorPositioning.Server.Clients
         {
             if (isClosed) return;
 
+            try { TcpClient.Client.Shutdown(SocketShutdown.Both); }
+            catch { }
+            try { TcpClient.Client.Disconnect(false); }
+            catch { }
             try { TcpClient.Client.Close(); }
             catch { }
             try { TcpClient.Dispose(); }
+            catch { }
+            try { thread.Abort(); }
             catch { }
 
             isClosed = true;
@@ -240,19 +219,5 @@ namespace IndoorPositioning.Server.Clients
         }
 
         #endregion IDisposable Support
-    }
-
-    /* State object that will be used when receiving data... */
-    public class TcpStateObject
-    {
-        public Socket Socket = null;
-        public int BufferSize = 8196;
-        public byte[] Buffer;
-        public StringBuilder Data = new StringBuilder();
-
-        public TcpStateObject()
-        {
-            Buffer = new byte[BufferSize];
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using IndoorPositioning.Server.Database.Model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace IndoorPositioning.Server.Database.Dao
@@ -18,6 +19,28 @@ namespace IndoorPositioning.Server.Database.Dao
             }
         }
 
+        /* Returns all beacons in DB */
+        public List<Beacon> GetBeacons()
+        {
+            using (IndoorPositioningContext db = new IndoorPositioningContext())
+            {
+                var beacons = db.Beacons.ToList();
+                return beacons;
+            }
+        }
+
+        /* Returns the beacon with given id */
+        public Beacon GetBeaconById(int id)
+        {
+            using (IndoorPositioningContext db = new IndoorPositioningContext())
+            {
+                var beacon = db.Beacons
+                    .Where(b => b.BeaconId == id)
+                    .FirstOrDefault();
+                return beacon;
+            }
+        }
+
         /* Adds new beacon */
         public Beacon NewBeacon(Beacon beacon)
         {
@@ -30,7 +53,7 @@ namespace IndoorPositioning.Server.Database.Dao
             }
         }
 
-        /* Adds new beacon */
+        /* Updates new beacon */
         public Beacon UpdateBeacon(Beacon beacon)
         {
             using (IndoorPositioningContext db = new IndoorPositioningContext())

@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="IndoorPositioning.UI.Components.BeaconsScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Beacons" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Column="0" x:Name="lstBeacons"
+                      SelectionChanged="lstBeacons_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Beacon Name: " />
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtBeaconName" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Beacon MAC Address: " />
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtBeaconMacAddress" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Beacon Last Signal Time: " />
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBeaconLastSignalTime" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Beacon Type: " />
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtBeaconType" />
+                </Grid>
+                <Button Grid.Row="2" x:Name="btnUpdate" HorizontalAlignment="Right" Content="Update" Click="btnUpdate_Click" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

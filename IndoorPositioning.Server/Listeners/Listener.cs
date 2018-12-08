@@ -33,9 +33,9 @@ namespace IndoorPositioning.Server.Listener
             if (listening) return;
             listeningThread = new Thread(Listen);
             listeningThread.IsBackground = true;
-            listeningThread.Start();
 
             listening = true;
+            listeningThread.Start();
         }
 
         public void StopListening()
@@ -81,6 +81,10 @@ namespace IndoorPositioning.Server.Listener
                 }
             }
             catch (ThreadAbortException) { }
+            catch (Exception ex)
+            {
+                LOGGER.LogError(ex.ToString());
+            }
         }
 
         #region IDisposable Support

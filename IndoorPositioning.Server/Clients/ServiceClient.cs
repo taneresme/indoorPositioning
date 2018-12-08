@@ -1,4 +1,5 @@
 ﻿using IndoorPositioning.Server.Logging;
+using IndoorPositioning.Server.Services;
 using Microsoft.Extensions.Logging;
 using System.Net.Sockets;
 
@@ -7,6 +8,9 @@ namespace IndoorPositioning.Server.Clients
     public class ServiceClient : Client
     {
         private ILogger LOGGER = Logger.CreateLogger<ServiceClient>();
+
+        private const string UNKNOWN_COMMAND_ERROR = "error: unknown command!";
+        private const string EXCEPTION_OCCURED_ERROR = "error: an exception occured, check the server logs!";
 
         /* Locker object */
         private static readonly object locker = new object();
@@ -27,18 +31,21 @@ namespace IndoorPositioning.Server.Clients
             {
                 try
                 {
-                    if (data == null) return;
-                    data = data.ToLower();
+                    LOGGER.LogError("Received: " + data);
 
-                    if (data.StartsWith("echo")) Echo(data);
-                    else if (data.StartsWith("get ")) Get(data);
-                    else Send("Command not found!");
+                    if (data == null) return;
+                    string inData = data.ToLower();
+
+                    if (inData.StartsWith("echo")) Echo(data);
+                    else if (inData.StartsWith("get ")) Get(data);
+                    else if (inData.StartsWith("update ")) Update(data);
+                    else Send(UNKNOWN_COMMAND_ERROR);
                 }
                 catch (System.Exception ex)
                 {
                     LOGGER.LogError(ex.ToString());
 
-                    try { Send("An exception occured, check the server logs!"); }
+                    try { Send(EXCEPTION_OCCURED_ERROR); }
                     catch { }
                 }
             }
@@ -52,22 +59,17 @@ namespace IndoorPositioning.Server.Clients
 
         private void Echo(string data)
         {
-            Send(data);
+            new EchoService(this).Service(data);
         }
 
         private void Get(string data)
         {
-            /* Check the data received if valid */
-            if (!CheckData(data, 2))
-            {
-                Send("Invalid parameters!");
-                return;
-            }
-            /* Returns server mode (fingerprinting or positioning) */
-            if (splittedData[1] == "mode")
-            {
-                Send(Server.ServerMode.ToString());
-            }
+            new GetService(this).Service(data);
+        }
+
+        private void Update(string data)
+        {
+            new UpdateService(this).Service(data);
         }
     }
 }

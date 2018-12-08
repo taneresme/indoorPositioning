@@ -62,10 +62,17 @@ namespace IndoorPositioning.Server.Clients
                 {
                     GatewayType = gatewayType,
                     MACAddress = gatewayMac,
+                    Name = "Unknown",
                 };
 
                 /* save new gateway */
                 gatewayDao.NewGateway(gateway);
+            }
+            else
+            {
+                /* Update beacon */
+                gateway.LastSignalTimestamp = DateTime.Now;
+                gatewayDao.UpdateGateway(gateway);
             }
         }
 
@@ -82,6 +89,7 @@ namespace IndoorPositioning.Server.Clients
                 {
                     MACAddress = beaconMac,
                     LastRssi = rssi,
+                    Name = "Unknown",
                 };
 
                 /* save new beacon */
