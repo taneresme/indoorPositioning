@@ -9,6 +9,12 @@ namespace IndoorPositioning.Server
     public class Server : IDisposable
     {
         public static ServerModes ServerMode { get; set; }
+        /* String counterparts of server modes */
+        public static Dictionary<string, ServerModes> Modes = new Dictionary<string, ServerModes>()
+        {
+            { "positioning", ServerModes.Positioning},
+            { "fingerprinting", ServerModes.Fingerprinting},
+        };
 
         private List<GatewayClient> gateways = new List<GatewayClient>();
         private List<ServiceClient> services = new List<ServiceClient>();

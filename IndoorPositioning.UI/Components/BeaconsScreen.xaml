@@ -37,6 +37,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
@@ -49,7 +50,9 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Beacon Last Signal Time: " />
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBeaconLastSignalTime" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Beacon Type: " />
-                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtBeaconType" />
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtBeaconType" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Last Rssi: " />
+                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtLastRssi" />
                 </Grid>
                 <Button Grid.Row="2" x:Name="btnUpdate" HorizontalAlignment="Right" Content="Update" Click="btnUpdate_Click" />
             </Grid>

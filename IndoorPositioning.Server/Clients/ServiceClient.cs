@@ -31,14 +31,13 @@ namespace IndoorPositioning.Server.Clients
             {
                 try
                 {
-                    LOGGER.LogError("Received: " + data);
-
                     if (data == null) return;
                     string inData = data.ToLower();
 
                     if (inData.StartsWith("echo")) Echo(data);
                     else if (inData.StartsWith("get ")) Get(data);
                     else if (inData.StartsWith("update ")) Update(data);
+                    else if (inData.StartsWith("set ")) Set(data);
                     else Send(UNKNOWN_COMMAND_ERROR);
                 }
                 catch (System.Exception ex)
@@ -70,6 +69,11 @@ namespace IndoorPositioning.Server.Clients
         private void Update(string data)
         {
             new UpdateService(this).Service(data);
+        }
+
+        private void Set(string data)
+        {
+            new SetService(this).Service(data);
         }
     }
 }

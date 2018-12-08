@@ -71,8 +71,6 @@ namespace IndoorPositioning.Server.Clients
         /* Sends the given data */
         public void Send(String data)
         {
-            LOGGER.LogError("Sending Data: " + data);
-
             if (TcpClient == null)
                 throw new Exception("tcpClient cannot be null!");
 

@@ -28,6 +28,7 @@ namespace IndoorPositioning.Server.Services
             else if ("beacon".Equals(command)) GetBeacon(dataItems);
             else if ("gateways".Equals(command)) GetGateways();
             else if ("gateway".Equals(command)) GetGateway(dataItems);
+            else if ("mode".Equals(command)) GetMode();
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
@@ -110,6 +111,11 @@ namespace IndoorPositioning.Server.Services
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(gateway);
             ServiceClient.Send(json);
+        }
+
+        private void GetMode()
+        {
+            ServiceClient.Send(Server.ServerMode.ToString());
         }
     }
 }

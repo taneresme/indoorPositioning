@@ -57,6 +57,7 @@ namespace IndoorPositioning.UI.Components
             txtBeaconMacAddress.Text = beacon.MACAddress;
             txtBeaconLastSignalTime.Text = beacon.LastSignalTimestamp.ToString();
             txtBeaconType.Text = beacon.BeaconType;
+            txtLastRssi.Text = beacon.LastRssi.ToString();
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
