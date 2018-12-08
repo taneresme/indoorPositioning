@@ -16,41 +16,32 @@ namespace IndoorPositioning.UI.Client
         /* gets gateways from server */
         public static List<Gateway> GetGateways()
         {
-            //TcpConsumer.Instance.Send(GET_GATEWAYS_COMMAND);
-            //string json = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
-            using (TcpConsumer consumer = new TcpConsumer())
+            TcpConsumer.Instance.Send(GET_GATEWAYS_COMMAND);
+            string json = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
+
+            if (json.StartsWith("error"))
             {
-                consumer.Send(GET_GATEWAYS_COMMAND);
-                string json = consumer.Receive(RECEIVE_TIMEOUT);
-
-                if (json.StartsWith("error"))
-                {
-                    throw new Exception(json);
-                }
-
-                List<Gateway> gateways = JsonConvert.DeserializeObject<List<Gateway>>(json);
-                return gateways;
+                throw new Exception(json);
             }
+
+            List<Gateway> gateways = JsonConvert.DeserializeObject<List<Gateway>>(json);
+            return gateways;
+
         }
 
         /* gets beacons from server */
         public static List<Beacon> GetBeacons()
         {
-            //TcpConsumer.Instance.Send(GET_BEACONS_COMMAND);
-            //string json = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
-            using (TcpConsumer consumer = new TcpConsumer())
+            TcpConsumer.Instance.Send(GET_BEACONS_COMMAND);
+            string json = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
+
+            if (json.StartsWith("error"))
             {
-                consumer.Send(GET_BEACONS_COMMAND);
-                string json = consumer.Receive(RECEIVE_TIMEOUT);
-
-                if (json.StartsWith("error"))
-                {
-                    throw new Exception(json);
-                }
-
-                List<Beacon> beacons = JsonConvert.DeserializeObject<List<Beacon>>(json);
-                return beacons;
+                throw new Exception(json);
             }
+
+            List<Beacon> beacons = JsonConvert.DeserializeObject<List<Beacon>>(json);
+            return beacons;
         }
 
         /* sends the update-gateway request to the server */
@@ -58,17 +49,12 @@ namespace IndoorPositioning.UI.Client
         {
             string json = JsonConvert.SerializeObject(gateway);
 
-            //TcpConsumer.Instance.Send(UPDATE_GATEWAY_COMMAND + json);
-            //string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
-            using (TcpConsumer consumer = new TcpConsumer())
-            {
-                consumer.Send(UPDATE_GATEWAY_COMMAND + json);
-                string result = consumer.Receive(RECEIVE_TIMEOUT);
+            TcpConsumer.Instance.Send(UPDATE_GATEWAY_COMMAND + json);
+            string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
 
-                if (result.StartsWith("error"))
-                {
-                    throw new Exception(json);
-                }
+            if (result.StartsWith("error"))
+            {
+                throw new Exception(json);
             }
         }
         /* sends the update-beacon request to the server */
@@ -76,17 +62,12 @@ namespace IndoorPositioning.UI.Client
         {
             string json = JsonConvert.SerializeObject(beacon);
 
-            //TcpConsumer.Instance.Send(UPDATE_BEACON_COMMAND + json);
-            //string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
-            using (TcpConsumer consumer = new TcpConsumer())
-            {
-                consumer.Send(UPDATE_BEACON_COMMAND + json);
-                string result = consumer.Receive(RECEIVE_TIMEOUT);
+            TcpConsumer.Instance.Send(UPDATE_BEACON_COMMAND + json);
+            string result = TcpConsumer.Instance.Receive(RECEIVE_TIMEOUT);
 
-                if (result.StartsWith("error"))
-                {
-                    throw new Exception(json);
-                }
+            if (result.StartsWith("error"))
+            {
+                throw new Exception(json);
             }
         }
 

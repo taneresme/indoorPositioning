@@ -12,20 +12,15 @@ namespace IndoorPositioning.UI.Client
 
     public class TcpConsumer : IDisposable
     {
-        /* There was a problem related to the persistently connected TCP
-         * so the codes below were commented out */
-
-        //private static readonly object locker = new object();
-
-        //private static TcpConsumer instance;
-        //public static TcpConsumer Instance
-        //{
-        //    get
-        //    {
-        //        if (instance == null) instance = new TcpConsumer();
-        //        return instance;
-        //    }
-        //}
+        private static TcpConsumer instance;
+        public static TcpConsumer Instance
+        {
+            get
+            {
+                if (instance == null) instance = new TcpConsumer();
+                return instance;
+            }
+        }
 
         private const int READ_BUFFER_SIZE = 8192;
         //private Thread thread;
@@ -62,7 +57,7 @@ namespace IndoorPositioning.UI.Client
             DataReceived?.Invoke(data);
         }
 
-        public TcpConsumer()
+        private TcpConsumer()
         {
             string remoteAddress = ConfigurationSettings.AppSettings["RemoteServer"].ToString();
             IpAddress = remoteAddress.Split(':')[0];
@@ -176,7 +171,7 @@ namespace IndoorPositioning.UI.Client
                 {
                     Close();
 
-                    //instance = null;
+                    instance = null;
                 }
 
                 disposedValue = true;
