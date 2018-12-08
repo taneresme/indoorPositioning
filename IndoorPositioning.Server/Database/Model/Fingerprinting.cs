@@ -6,6 +6,8 @@ namespace IndoorPositioning.Server.Database.Model
     {
         public int FingerprintingId { get; set; }
         public DateTime Timestamp { get; set; }
+        public int Xaxis { get; set; }
+        public int Yaxis { get; set; }
         public string Rssi { get; set; }
 
         public int EnvironmentId { get; set; }
@@ -13,8 +15,5 @@ namespace IndoorPositioning.Server.Database.Model
 
         public int GatewayId { get; set; }
         public Gateway Gateway { get; set; }
-
-        public int BeaconId { get; set; }
-        public Beacon Beacon { get; set; }
     }
 }

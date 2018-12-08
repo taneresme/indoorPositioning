@@ -9,7 +9,7 @@ namespace IndoorPositioning.UI.Model
         public string MACAddress { get; set; }
         public DateTime LastSignalTimestamp { get; set; }
         public string GatewayType { get; set; }
-        public int Xaxis { get; set; }
-        public int Yaxis { get; set; }
+        public string Xaxis { get; set; }
+        public string Yaxis { get; set; }
     }
 }

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IndoorPositioning.UI.Components
 {
     /// <summary>
-    /// Interaction logic for MapComponent.xaml
+    /// Interaction logic for EnvironmentsScreen.xaml
     /// </summary>
-    public partial class MapComponent : UserControl
+    public partial class EnvironmentsScreen : UserControl
     {
-        public MapComponent()
+        public EnvironmentsScreen()
         {
             InitializeComponent();
         }

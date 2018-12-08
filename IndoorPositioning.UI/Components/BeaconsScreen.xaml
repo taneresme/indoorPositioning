@@ -31,7 +31,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" x:Name="gridBeaconDetails">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -44,15 +44,15 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Beacon Name: " />
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtBeaconName" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" />
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Beacon MAC Address: " />
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtBeaconMacAddress" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MACAddress}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Beacon Last Signal Time: " />
-                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBeaconLastSignalTime" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LastSignalTimestamp}" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Beacon Type: " />
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtBeaconType" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding BeaconType, Mode=TwoWay}" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Last Rssi: " />
-                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtLastRssi" />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LastRssi}" />
                 </Grid>
 
                 <Grid Grid.Row="2" HorizontalAlignment="Right">

@@ -13,7 +13,9 @@ namespace IndoorPositioning.UI.Components
     public partial class BeaconsScreen : UserControl
     {
         private bool initialized = false;
-        
+        private Beacon selectedBeacon;
+        private int selectedIndex = 0;
+
         public BeaconsScreen()
         {
             Initialized += BeaconsScreen_Initialized;
@@ -51,26 +53,26 @@ namespace IndoorPositioning.UI.Components
         private void lstBeacons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstBeacons.SelectedItem == null) { return; }
-            Beacon beacon = (Beacon)lstBeacons.SelectedItem;
 
-            txtBeaconName.Text = beacon.Name;
-            txtBeaconMacAddress.Text = beacon.MACAddress;
-            txtBeaconLastSignalTime.Text = beacon.LastSignalTimestamp.ToString();
-            txtBeaconType.Text = beacon.BeaconType;
-            txtLastRssi.Text = beacon.LastRssi.ToString();
+            selectedBeacon = (Beacon)lstBeacons.SelectedItem;
+            selectedIndex = lstBeacons.SelectedIndex;
+
+            gridBeaconDetails.DataContext = selectedBeacon;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedBeacon == null) { return; }
+
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                Beacon beacon = (Beacon)lstBeacons.SelectedItem;
-                beacon.Name = txtBeaconName.Text;
-                IndoorPositioningClient.UpdateBeacon(beacon);
+                IndoorPositioningClient.UpdateBeacon(selectedBeacon);
 
                 /* Load the list again */
                 Load();
+                /* Select the same item from the list. */
+                lstBeacons.SelectedIndex = selectedIndex;
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)
@@ -82,17 +84,19 @@ namespace IndoorPositioning.UI.Components
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedBeacon == null) { return; }
             MessageBoxResult result = MessageBox.Show("Are you sure to delete this?", "WARNING!", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No) { return; }
 
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                Beacon beacon = (Beacon)lstBeacons.SelectedItem;
-                IndoorPositioningClient.DeleteBeacon(beacon);
+                IndoorPositioningClient.DeleteBeacon(selectedBeacon);
 
                 /* Load the list again */
                 Load();
+                /* remove selected item */
+                selectedBeacon = null;
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)

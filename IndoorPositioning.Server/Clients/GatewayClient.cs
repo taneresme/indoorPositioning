@@ -63,6 +63,8 @@ namespace IndoorPositioning.Server.Clients
                     GatewayType = gatewayType,
                     MACAddress = gatewayMac,
                     Name = "Unknown",
+                    Xaxis = "0",
+                    Yaxis = "0",
                 };
 
                 /* save new gateway */

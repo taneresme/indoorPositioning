@@ -58,7 +58,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
+    <Compile Include="VisualItems\GatewayShape.xaml.cs">
+      <DependentUpon>GatewayShape.xaml</DependentUpon>
+    </Compile>
     <Page Include="Components\BeaconsScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\EnvironmentsScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\FingerprintingScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,10 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MapScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Components\MapComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,19 +95,26 @@
     <Compile Include="Components\BeaconsScreen.xaml.cs">
       <DependentUpon>BeaconsScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\EnvironmentsScreen.xaml.cs">
+      <DependentUpon>EnvironmentsScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\FingerprintingScreen.xaml.cs">
+      <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\GatewaysScreen.xaml.cs">
       <DependentUpon>GatewaysScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\MapScreen.xaml.cs">
       <DependentUpon>MapScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\MapComponent.xaml.cs">
-      <DependentUpon>MapComponent.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VisualItems\GatewayShape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Beacon.cs" />

@@ -12,9 +12,16 @@
                 <MenuItem Header="Map" x:Name="mnItemMap" />
                 <MenuItem Header="Gateways" x:Name="mnItemGateways" Click="mnItemGateways_Click" />
                 <MenuItem Header="Beacons" x:Name="mnItemBeacons" Click="mnItemBeacons_Click" />
+                <MenuItem Header="Environments" x:Name="mnItemEnvironments" />
+                <MenuItem Header="Fingerprinting" x:Name="mnItemFingerprinting" />
             </Menu>
 
-            <ContentControl x:Name="content" />
+            <StatusBar DockPanel.Dock="Bottom">
+            </StatusBar>
+            
+            <ContentControl x:Name="content">
+                <TextBlock Text="Please make selection from the menu" HorizontalAlignment="Center" />
+            </ContentControl>
 
             <!--<Grid>
                 <TextBlock x:Name="txtEmptyScreen" Text="Please use menu for screens!" HorizontalAlignment="Center" />
