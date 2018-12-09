@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             SizeChanged="UserControl_SizeChanged">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -49,18 +50,22 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Creation Time: " />
                     <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Timestamp}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Width: " />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Width}" x:Name="txtWidth" TextAlignment="Right" PreviewTextInput="txt_PreviewTextInput" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Width, Mode=TwoWay}" x:Name="txtWidth" 
+                             TextAlignment="Right" PreviewTextInput="txt_PreviewTextInput" TextChanged="txtHeightOrWidth_TextChanged" />
                     <TextBlock Grid.Row="2" Grid.Column="2" Text=" cm" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Height: " />
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Height}" x:Name="txtHeight" TextAlignment="Right" PreviewTextInput="txt_PreviewTextInput" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Height, Mode=TwoWay}" x:Name="txtHeight" 
+                             TextAlignment="Right" PreviewTextInput="txt_PreviewTextInput" TextChanged="txtHeightOrWidth_TextChanged" />
                     <TextBlock Grid.Row="3" Grid.Column="2" Text=" cm" />
                 </Grid>
 
                 <TextBlock Grid.Row="1" Text="Preview: " />
-                
-                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <Canvas Grid.Row="2" x:Name="canvasEnvironmentPreview" Background="LightGray" />
-                </ScrollViewer>
+
+                <Grid Grid.Row="2" x:Name="gridCanvas">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Canvas x:Name="canvasEnvironmentPreview" Background="LightGray" />
+                    </ScrollViewer>
+                </Grid>
                 
                 <Grid Grid.Row="3" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>

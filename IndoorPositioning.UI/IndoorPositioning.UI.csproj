@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\EnvironmentSizeToCanvasSizeConverter.cs" />
     <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
     <Compile Include="VisualItems\GatewayShape.xaml.cs">
       <DependentUpon>GatewayShape.xaml</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using IndoorPositioning.UI.Client;
+using IndoorPositioning.UI.Converters;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -137,6 +138,48 @@ namespace IndoorPositioning.UI.Components
         {
             Regex _regex = new Regex("\\d"); //regex that matches disallowed text
             e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ChangeCanvasSize();
+        }
+
+        private void ChangeCanvasSize()
+        {
+            if (selectedEnvironment == null) return;
+
+            /* We are setting the height of the canvas according to the size of screen */
+            canvasEnvironmentPreview.Height = (double)new EnvironmentSizeToCanvasSizeConverter()
+                .Convert(
+                    new object[] {
+                        selectedEnvironment.Height,
+                        selectedEnvironment.Width,
+                        gridCanvas.ActualHeight, //the container size of the canvas
+                        gridCanvas.ActualWidth //the container size of the canvas
+                    }, null, "height", null);
+            /* We are setting the width of the canvas according to the size of screen */
+            canvasEnvironmentPreview.Width = (double)new EnvironmentSizeToCanvasSizeConverter()
+                .Convert(
+                    new object[] {
+                        selectedEnvironment.Height,
+                        selectedEnvironment.Width,
+                        gridCanvas.ActualHeight, //the container size of the canvas
+                        gridCanvas.ActualWidth //the container size of the canvas
+                    }, null, "width", null);
+        }
+
+        private void txtHeightOrWidth_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            /* Check the values of the text boxes whether they are parsable or not */
+            if (string.IsNullOrEmpty(txtHeight.Text)) return;
+            if (string.IsNullOrEmpty(txtWidth.Text)) return;
+
+            /* Set manually the values because when this event fired, two mode event becomes not fired */
+            selectedEnvironment.Height = int.Parse(txtHeight.Text);
+            selectedEnvironment.Width = int.Parse(txtWidth.Text);
+
+            ChangeCanvasSize();
         }
     }
 }
