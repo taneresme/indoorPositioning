@@ -24,5 +24,11 @@ namespace IndoorPositioning.UI
             var screen = new BeaconsScreen();
             content.Content = screen;
         }
+
+        private void mnItemEnvironments_Click(object sender, RoutedEventArgs e)
+        {
+            var screen = new EnvironmentsScreen();
+            content.Content = screen;
+        }
     }
 }

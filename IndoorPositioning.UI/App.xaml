@@ -41,5 +41,12 @@
             <Setter Property="Margin" Value="5" />
         </Style>
 
+        <Style TargetType="TextBlock" x:Key="HeaderTextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
     </Application.Resources>
 </Application>

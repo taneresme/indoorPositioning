@@ -51,6 +51,7 @@ namespace IndoorPositioning.UI.Components
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 lstGateways.ItemsSource = IndoorPositioningClient.GetGateways();
+                if (lstGateways.Items.Count > 0) { lstGateways.SelectedIndex = selectedIndex; }
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)
@@ -145,10 +146,11 @@ namespace IndoorPositioning.UI.Components
                 Gateway gateway = (Gateway)lstGateways.SelectedItem;
                 IndoorPositioningClient.DeleteGateway(gateway);
 
-                /* Load the list again */
-                Load();
                 /* remove selected item */
                 selectedGateway = null;
+                selectedIndex = 0;
+                /* Load the list again */
+                Load();
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)

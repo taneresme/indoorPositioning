@@ -26,10 +26,11 @@ namespace IndoorPositioning.Server.Services
             /* Determine the command */
             if ("beacon".Equals(command)) DeleteBeacon(data);
             else if ("gateway".Equals(command)) DeleteGateway(data);
+            else if ("environment".Equals(command)) DeleteEnvironment(data);
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
-        /* Updates the beacon that is provided as json */
+        /* Deletes the beacon that is provided as json */
         private void DeleteBeacon(string data)
         {
             /* we are triming data below, splitting it by blank chars is not a valid way.
@@ -43,7 +44,7 @@ namespace IndoorPositioning.Server.Services
             ServiceClient.Send(OK);
         }
 
-        /* Updates the gateway that is provided as json */
+        /* Deletes the gateway that is provided as json */
         private void DeleteGateway(string data)
         {
             /* we are triming data below, splitting it by blank chars is not a valid way.
@@ -54,6 +55,20 @@ namespace IndoorPositioning.Server.Services
             Gateway gateway = JsonConvert.DeserializeObject<Gateway>(json);
             GatewayDao gatewayDao = new GatewayDao();
             gatewayDao.DeleteGateway(gateway);
+            ServiceClient.Send(OK);
+        }
+
+        /* Deletes the environment that is provided as json */
+        private void DeleteEnvironment(string data)
+        {
+            /* we are triming data below, splitting it by blank chars is not a valid way.
+             * because blank char can become in the json object as well */
+            string command = "delete environment ";
+            string json = data.Substring(command.Length);
+
+            Environment environment = JsonConvert.DeserializeObject<Environment>(json);
+            EnvironmentDao environmentDao = new EnvironmentDao();
+            environmentDao.DeleteEnvironment(environment);
             ServiceClient.Send(OK);
         }
     }

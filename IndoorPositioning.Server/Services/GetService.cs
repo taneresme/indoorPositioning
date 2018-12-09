@@ -29,6 +29,7 @@ namespace IndoorPositioning.Server.Services
             else if ("gateways".Equals(command)) GetGateways();
             else if ("gateway".Equals(command)) GetGateway(dataItems);
             else if ("mode".Equals(command)) GetMode();
+            else if ("environments".Equals(command)) GetEnvironments();
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
@@ -116,6 +117,15 @@ namespace IndoorPositioning.Server.Services
         private void GetMode()
         {
             ServiceClient.Send(Server.ServerMode.ToString());
+        }
+
+        private void GetEnvironments()
+        {
+            EnvironmentDao environmentDao = new EnvironmentDao();
+            List<Environment> environments = environmentDao.GetEnvironments();
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(environments);
+            ServiceClient.Send(json);
         }
     }
 }

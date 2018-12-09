@@ -12,7 +12,7 @@
                 <MenuItem Header="Map" x:Name="mnItemMap" />
                 <MenuItem Header="Gateways" x:Name="mnItemGateways" Click="mnItemGateways_Click" />
                 <MenuItem Header="Beacons" x:Name="mnItemBeacons" Click="mnItemBeacons_Click" />
-                <MenuItem Header="Environments" x:Name="mnItemEnvironments" />
+                <MenuItem Header="Environments" x:Name="mnItemEnvironments" Click="mnItemEnvironments_Click" />
                 <MenuItem Header="Fingerprinting" x:Name="mnItemFingerprinting" />
             </Menu>
 

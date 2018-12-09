@@ -41,6 +41,7 @@ namespace IndoorPositioning.UI.Components
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 lstBeacons.ItemsSource = IndoorPositioningClient.GetBeacons();
+                if (lstBeacons.Items.Count > 0) { lstBeacons.SelectedIndex = selectedIndex; }
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)
@@ -93,10 +94,11 @@ namespace IndoorPositioning.UI.Components
                 Mouse.OverrideCursor = Cursors.Wait;
                 IndoorPositioningClient.DeleteBeacon(selectedBeacon);
 
-                /* Load the list again */
-                Load();
                 /* remove selected item */
                 selectedBeacon = null;
+                selectedIndex = 0;
+                /* Load the list again */
+                Load();
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)

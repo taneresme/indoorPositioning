@@ -2,7 +2,7 @@
 using IndoorPositioning.Server.Database.Dao;
 using IndoorPositioning.Server.Database.Model;
 using Newtonsoft.Json;
-using System;
+using Environment = IndoorPositioning.Server.Database.Model.Environment;
 
 namespace IndoorPositioning.Server.Services
 {
@@ -27,6 +27,7 @@ namespace IndoorPositioning.Server.Services
             /* Determine the command */
             if ("beacon".Equals(command)) UpdateBeacon(data);
             else if ("gateway".Equals(command)) UpdateGateway(data);
+            else if ("environment".Equals(command)) UpdateEnvironment(data);
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
@@ -55,6 +56,20 @@ namespace IndoorPositioning.Server.Services
             Gateway gateway = JsonConvert.DeserializeObject<Gateway>(json);
             GatewayDao gatewayDao = new GatewayDao();
             gatewayDao.UpdateGateway(gateway);
+            ServiceClient.Send(OK);
+        }
+
+        /* Updates the gateway that is provided as json */
+        private void UpdateEnvironment(string data)
+        {
+            /* we are triming data below, splitting it by blank chars is not a valid way.
+             * because blank char can become in the json object as well */
+            string command = "update environment ";
+            string json = data.Substring(command.Length);
+
+            Environment environment = JsonConvert.DeserializeObject<Environment>(json);
+            EnvironmentDao environmentDao = new EnvironmentDao();
+            environmentDao.UpdateEnvironment(environment);
             ServiceClient.Send(OK);
         }
     }
