@@ -60,8 +60,14 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnvironmentSizeToCanvasSizeConverter.cs" />
     <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
+    <Compile Include="VisualItems\EnvironmentShape.xaml.cs">
+      <DependentUpon>EnvironmentShape.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisualItems\GatewayShape.xaml.cs">
       <DependentUpon>GatewayShape.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VisualItems\ReferencePointShape.xaml.cs">
+      <DependentUpon>ReferencePointShape.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\BeaconsScreen.xaml">
       <SubType>Designer</SubType>
@@ -112,7 +118,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VisualItems\EnvironmentShape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VisualItems\GatewayShape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VisualItems\ReferencePointShape.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

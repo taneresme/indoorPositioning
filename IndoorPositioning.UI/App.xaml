@@ -20,32 +20,31 @@
         <Style TargetType="ComboBox">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="TextBlock" x:Key="HeaderTextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="30" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="3" />
         </Style>
 
     </Application.Resources>

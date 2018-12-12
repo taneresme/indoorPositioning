@@ -10,7 +10,6 @@ namespace IndoorPositioning.Server.Database.Model
         public DateTime Timestamp { get; set; } = DateTime.Now;
         public int Width { get; set; }
         public int Height { get; set; }
-
-        public ICollection<EnvironmentReferencePoint> EnvironmentReferencePoints { get; set; }
+        public int DistanceBetweenReferencePoints { get; set; }
     }
 }

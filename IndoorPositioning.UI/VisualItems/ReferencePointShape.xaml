@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="IndoorPositioning.UI.VisualItems.ReferencePointShape"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Width="10" Height="10"
+             d:DesignHeight="10" d:DesignWidth="10">
+
+    <Grid Background="Transparent" Name="parent">
+        <RadioButton x:Name="radiobutton" GroupName="ReferencePoint">
+            <RadioButton.Template>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid Background="LightGray">
+                        <Line x:Name="lineFirst" X1="0" Y1="0" X2="{Binding ElementName='parent', Path='ActualWidth'}" 
+                          Y2="{Binding ElementName='parent', Path='ActualHeight'}" 
+                          Stroke="Black" StrokeThickness="2" />
+                        <Line x:Name="lineSecond" X1="0" Y1="{Binding ElementName='parent', Path='ActualHeight'}" 
+                          X2="{Binding ElementName='parent', Path='ActualWidth'}" Y2="0" 
+                          Stroke="Black" StrokeThickness="2" />
+                    </Grid>
+                </ControlTemplate>
+            </RadioButton.Template>
+            <RadioButton.Style>
+                <Style TargetType="RadioButton">
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </RadioButton.Style>
+        </RadioButton>
+    </Grid>
+</UserControl>
