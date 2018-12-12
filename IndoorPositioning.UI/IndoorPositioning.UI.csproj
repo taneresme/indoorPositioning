@@ -60,6 +60,9 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnvironmentSizeToCanvasSizeConverter.cs" />
     <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
+    <Compile Include="Screens\FingerprintingScreen.xaml.cs">
+      <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisualItems\EnvironmentShape.xaml.cs">
       <DependentUpon>EnvironmentShape.xaml</DependentUpon>
     </Compile>
@@ -69,23 +72,23 @@
     <Compile Include="VisualItems\ReferencePointShape.xaml.cs">
       <DependentUpon>ReferencePointShape.xaml</DependentUpon>
     </Compile>
-    <Page Include="Components\BeaconsScreen.xaml">
+    <Page Include="Screens\BeaconsScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\EnvironmentsScreen.xaml">
+    <Page Include="Screens\EnvironmentsScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\FingerprintingScreen.xaml">
+    <Page Include="Screens\FingerprintingScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\GatewaysScreen.xaml">
+    <Page Include="Screens\GatewaysScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\MapScreen.xaml">
+    <Page Include="Screens\MapScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -99,19 +102,16 @@
     </Compile>
     <Compile Include="Client\IndoorPositioningClient.cs" />
     <Compile Include="Client\TcpConsumer.cs" />
-    <Compile Include="Components\BeaconsScreen.xaml.cs">
+    <Compile Include="Screens\BeaconsScreen.xaml.cs">
       <DependentUpon>BeaconsScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\EnvironmentsScreen.xaml.cs">
+    <Compile Include="Screens\EnvironmentsScreen.xaml.cs">
       <DependentUpon>EnvironmentsScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\FingerprintingScreen.xaml.cs">
-      <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Components\GatewaysScreen.xaml.cs">
+    <Compile Include="Screens\GatewaysScreen.xaml.cs">
       <DependentUpon>GatewaysScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\MapScreen.xaml.cs">
+    <Compile Include="Screens\MapScreen.xaml.cs">
       <DependentUpon>MapScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">

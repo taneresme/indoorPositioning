@@ -1,4 +1,4 @@
-﻿using IndoorPositioning.UI.Components;
+﻿using IndoorPositioning.UI.Screens;
 using System.Windows;
 
 namespace IndoorPositioning.UI
@@ -28,6 +28,12 @@ namespace IndoorPositioning.UI
         private void mnItemEnvironments_Click(object sender, RoutedEventArgs e)
         {
             var screen = new EnvironmentsScreen();
+            content.Content = screen;
+        }
+
+        private void mnItemMap_Click(object sender, RoutedEventArgs e)
+        {
+            var screen = new MapScreen();
             content.Content = screen;
         }
     }

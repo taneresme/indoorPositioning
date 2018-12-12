@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace IndoorPositioning.UI.Components
+namespace IndoorPositioning.UI.Screens
 {
     /// <summary>
     /// Interaction logic for Beacons.xaml

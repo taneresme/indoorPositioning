@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="IndoorPositioning.UI.Components.EnvironmentsScreen"
+﻿<UserControl x:Class="IndoorPositioning.UI.Screens.EnvironmentsScreen"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -71,7 +71,7 @@
                 <TextBlock Grid.Row="1" Text="Preview: " />
 
                 <Grid Grid.Row="2" x:Name="gridCanvas">
-                    <visualitems:EnvironmentShape x:Name="environmentShape"
+                    <visualitems:EnvironmentShape x:Name="environmentShape" Selectable="False"
                                                   EnvironmentHeight="{Binding Text, ElementName=txtHeight}"
                                                   EnvironmentWidth="{Binding Text, ElementName=txtWidth}"
                                                   DistanceBetweenReferencePoints="{Binding Text, ElementName=txtDistanceBetweenRefPoints}"/>

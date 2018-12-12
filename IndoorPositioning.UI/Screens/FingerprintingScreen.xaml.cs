@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IndoorPositioning.UI.Components
+namespace IndoorPositioning.UI.Screens
 {
     /// <summary>
     /// Interaction logic for FingerprintingScreen.xaml

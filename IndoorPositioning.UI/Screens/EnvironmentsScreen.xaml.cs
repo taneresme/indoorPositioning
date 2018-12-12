@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Environment = IndoorPositioning.UI.Model.Environment;
 
-namespace IndoorPositioning.UI.Components
+namespace IndoorPositioning.UI.Screens
 {
     /// <summary>
     /// Interaction logic for EnvironmentsScreen.xaml
