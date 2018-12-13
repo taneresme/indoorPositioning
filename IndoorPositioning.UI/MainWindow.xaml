@@ -12,7 +12,7 @@
                 <MenuItem Header="Gateways" x:Name="mnItemGateways" Click="mnItemGateways_Click" />
                 <MenuItem Header="Beacons" x:Name="mnItemBeacons" Click="mnItemBeacons_Click" />
                 <MenuItem Header="Environments" x:Name="mnItemEnvironments" Click="mnItemEnvironments_Click" />
-                <MenuItem Header="Fingerprinting" x:Name="mnItemFingerprinting" />
+                <MenuItem Header="Fingerprinting" x:Name="mnItemFingerprinting" Click="mnItemFingerprinting_Click" />
             </Menu>
 
             <StatusBar DockPanel.Dock="Bottom">

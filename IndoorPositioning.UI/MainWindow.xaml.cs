@@ -36,5 +36,11 @@ namespace IndoorPositioning.UI
             var screen = new MapScreen();
             content.Content = screen;
         }
+
+        private void mnItemFingerprinting_Click(object sender, RoutedEventArgs e)
+        {
+            var screen = new FingerprintingScreen();
+            content.Content = screen;
+        }
     }
 }

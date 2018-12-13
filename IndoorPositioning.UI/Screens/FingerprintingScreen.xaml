@@ -4,9 +4,100 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IndoorPositioning.UI.Screens"
+             xmlns:visualitems="clr-namespace:IndoorPositioning.UI.VisualItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Fingerprinting" Style="{StaticResource HeaderTextBlock}" />
+
+            <Grid Grid.Column="1" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="75" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Environment: " />
+                <ComboBox Grid.Column="1" x:Name="cbEnvironments"
+                          SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ToggleButton Grid.Column="2" IsChecked="{Binding FingerprintingActivated, Mode=TwoWay}">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="1" Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content" Value="Disable" />
+                                    <Setter Property="ToolTip" Value="Deactivate fingerprinting mode" />
+                                    <Setter Property="Background" Value="ForestGreen" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content" Value="Enable" />
+                                    <Setter Property="ToolTip" Value="Activate fingerprinting mode" />
+                                    <Setter Property="Background" Value="IndianRed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Please follow the steps below for fingerprinting:" 
+                       Style="{StaticResource SmallTextBlock}" />
+            <TextBlock Grid.Row="1" Text="  1. Enable fingerprinting mode" 
+                       Style="{StaticResource SmallTextBlock}" />
+            <TextBlock Grid.Row="2" Text="  2. Select the reference point below to fetch the RSSIs. 
+If there is no reference point selected, fingerpring will not work" 
+                       Style="{StaticResource SmallTextBlock}" />
+            <TextBlock Grid.Row="3" Text="  3. Free the reference point selected before moving another point" 
+                       Style="{StaticResource SmallTextBlock}" />
+            <TextBlock Grid.Row="4" Text="  4. After completing each point, you should be stoping fingerpringing before moving" 
+                       Style="{StaticResource SmallTextBlock}" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <visualitems:EnvironmentShape x:Name="environmentShape"
+                                          EnvironmentHeight="{Binding SelectedItem.Height, ElementName=cbEnvironments}"
+                                          EnvironmentWidth="{Binding SelectedItem.Width, ElementName=cbEnvironments}"
+                                          DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" />
+        </Grid>
     </Grid>
 </UserControl>

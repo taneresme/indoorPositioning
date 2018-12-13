@@ -25,15 +25,27 @@ namespace IndoorPositioning.UI.Screens
         /* Used to figure out whether the component loaded or not */
         private bool initialized = false;
 
-        /* Stores the selected item of Combobox of the list of environments */
-        private Environment selectedEnvironment;
-        public Environment SelectedEnvironment
+        /* Stores selected index of the environment combobox */
+        private static int selectedEnvironmentIndex = -1;
+        public int SelectedEnvironmentIndex
         {
-            get { return selectedEnvironment; }
+            get { return selectedEnvironmentIndex; }
             set
             {
-                selectedEnvironment = value;
-                OnPropertyChanged("SelectedEnvironment");
+                selectedEnvironmentIndex = value;
+                OnPropertyChanged("SelectedEnvironmentIndex");
+            }
+        }
+
+        /* Stores selected index of the algorithm combobox */
+        private static int selectedAlgorithmIndex = -1;
+        public int SelectedAlgorithmIndex
+        {
+            get { return selectedAlgorithmIndex; }
+            set
+            {
+                selectedAlgorithmIndex = value;
+                OnPropertyChanged("SelectedAlgorithmIndex");
             }
         }
 
@@ -43,6 +55,8 @@ namespace IndoorPositioning.UI.Screens
             Loaded += MapScreen_Loaded;
 
             InitializeComponent();
+
+            DataContext = this;
         }
 
         private void MapScreen_Loaded(object sender, System.Windows.RoutedEventArgs e)

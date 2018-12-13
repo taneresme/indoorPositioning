@@ -8,7 +8,10 @@
              d:DesignHeight="10" d:DesignWidth="10">
 
     <Grid Background="Transparent" Name="parent">
-        <RadioButton x:Name="radiobutton" GroupName="ReferencePoint">
+        <RadioButton x:Name="radiobutton" GroupName="ReferencePoint" 
+                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                     Click="radiobutton_Click"
+                     Checked="radiobutton_Checked">
             <RadioButton.Template>
                 <ControlTemplate TargetType="RadioButton">
                     <Grid Background="LightGray">

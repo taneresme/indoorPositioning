@@ -40,12 +40,19 @@
             <Setter Property="Margin" Value="3" />
         </Style>
 
-        <Style TargetType="TextBlock" x:Key="HeaderTextBlock">
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="30" />
+        <Style TargetType="ToggleButton">
+            <Setter Property="FontSize" Value="20" />
             <Setter Property="Margin" Value="3" />
         </Style>
+        
+        <!--Names styles-->
+        <Style TargetType="TextBlock" x:Key="HeaderTextBlock">
+            <Setter Property="FontSize" Value="30" />
+        </Style>
 
+        <Style TargetType="TextBlock" x:Key="SmallTextBlock">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        
     </Application.Resources>
 </Application>

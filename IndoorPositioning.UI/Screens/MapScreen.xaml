@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Map" FontSize="30" />
+            <TextBlock Text="Map" Style="{StaticResource HeaderTextBlock}" />
 
             <Grid Grid.Column="1" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
@@ -27,7 +27,8 @@
                     <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Environment: " />
-                <ComboBox Grid.Column="1" x:Name="cbEnvironments">
+                <ComboBox Grid.Column="1" x:Name="cbEnvironments"
+                          SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
@@ -36,7 +37,10 @@
                 </ComboBox>
                 
                 <TextBlock Grid.Column="2" Text="Algorithm: " />
-                <ComboBox Grid.Column="3" x:Name="cbAlgorithms" />
+                <ComboBox Grid.Column="3" x:Name="cbAlgorithms" 
+                          SelectedIndex="{Binding SelectedAlgorithmIndex, Mode=TwoWay}">
+                    <ComboBoxItem Content="ML.NET" />
+                </ComboBox>
             </Grid>
         </Grid>
 

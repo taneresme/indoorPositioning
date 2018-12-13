@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace IndoorPositioning.UI.VisualItems
 {
@@ -7,7 +8,7 @@ namespace IndoorPositioning.UI.VisualItems
     /// <summary>
     /// Interaction logic for ReferencePointShape.xaml
     /// </summary>
-    public partial class ReferencePointShape : UserControl
+    public partial class ReferencePointShape : UserControl, INotifyPropertyChanged
     {
         public static int SIZE = 16;
 
@@ -21,14 +22,25 @@ namespace IndoorPositioning.UI.VisualItems
             }
         }
 
-        /* Returns if the reference point is selected. */
+        /* Event to be fired when one of the properties changed */
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        /* Stores whether this point selected or not */
+        private bool isSelected = false;
         public bool IsSelected
         {
-            get
+            get { return isSelected; }
+            set
             {
-                return radiobutton.IsChecked.HasValue
-                  ? radiobutton.IsChecked.Value
-                  : false;
+                isSelected = value;
+                OnPropertyChanged("IsSelected");
             }
         }
 
@@ -61,12 +73,28 @@ namespace IndoorPositioning.UI.VisualItems
             InitializeComponent();
 
             SetSizes(SIZE);
+
+            DataContext = this;
         }
 
         private void SetSizes(int size)
         {
             Width = size;
             Height = size;
+        }
+
+        /* I want to bo able to uncheck a radio button after clicking on it again.
+         * The implementation below is for that */
+        private bool justChecked = false;
+        private void radiobutton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (!justChecked && IsSelected) { IsSelected = false; }
+            justChecked = false;
+        }
+
+        private void radiobutton_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            justChecked = true;
         }
     }
 }
