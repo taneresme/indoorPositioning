@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using IndoorPositioning.Beacon.Core;
 
@@ -8,12 +9,23 @@ namespace IndoorPositioning.Beacon.Bluetooth
     public class Beacon : IBeacon
     {
         public bool IsProximityBeacon { get; set; }
-        public ulong Address { get; set; }
+        public string Address
+        {
+            get
+            {
+                return string.Join("", BitConverter.GetBytes(AddressAsUlong)
+                    .Reverse()
+                    .Select(b => b.ToString("X2")))
+                    .Substring(6);
+            }
+        }
+        public ulong AddressAsUlong { get; set; }
         public string LocalName { get; set; }
         public List<Guid> ServiceUuids { get; set; }
         public List<BeaconDataSection> DataSections { get; set; }
         public List<BeaconManufacturerData> ManufacturerData { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public int Rssi { get; set; }
 
         public Beacon()
         {
@@ -24,13 +36,14 @@ namespace IndoorPositioning.Beacon.Bluetooth
 
         public void Update(IBeacon beacon)
         {
-            this.Address = beacon.Address;
+            this.AddressAsUlong = beacon.AddressAsUlong;
             this.DataSections = beacon.DataSections;
             this.IsProximityBeacon = beacon.IsProximityBeacon;
             this.LocalName = beacon.LocalName;
             this.ManufacturerData = beacon.ManufacturerData;
             this.ServiceUuids = beacon.ServiceUuids;
             this.UpdatedAt = beacon.UpdatedAt;
+            this.Rssi = beacon.Rssi;
         }
 
         public override string ToString()
@@ -39,7 +52,8 @@ namespace IndoorPositioning.Beacon.Bluetooth
                 .Append("Beacon [ ")
                 .AppendLine("IsProximityBeacon : " + IsProximityBeacon)
                 .AppendLine("Address : " + Address)
-                .AppendLine("LocalName : " + LocalName);
+                .AppendLine("LocalName : " + LocalName)
+                .AppendLine("Rssi : " + Rssi);
             foreach (var item in ServiceUuids)
             {
                 sb.AppendLine(item.ToString());

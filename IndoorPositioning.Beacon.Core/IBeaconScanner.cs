@@ -10,6 +10,8 @@ namespace IndoorPositioning.Beacon.Core
 
         List<IBeacon> Beacons { get; }
         BeaconScannerStatus Status { get; }
+        string LocalAddress { get; }
+
         void Start();
         void Stop();
     }
