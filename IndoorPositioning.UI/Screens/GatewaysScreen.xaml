@@ -63,14 +63,13 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="X-Axis: " />
-                        <ComboBox Grid.Column="1" x:Name="cbXaxis" 
-                                  ItemsSource="{StaticResource Combobox_Gateway_Axis_Values}"
-                                  SelectedValue="{Binding Xaxis, Mode=TwoWay}" />
-                        <TextBlock Grid.Column="2" Text="Y-Axis: " />
-                        <ComboBox Grid.Column="3" x:Name="cbYaxis" 
+                        <ComboBox Grid.Column="1" x:Name="cbYaxis" 
                                   ItemsSource="{StaticResource Combobox_Gateway_Axis_Values}"
                                   SelectedValue="{Binding Yaxis, Mode=TwoWay}" />
-
+                        <TextBlock Grid.Column="2" Text="Y-Axis: " />
+                        <ComboBox Grid.Column="3" x:Name="cbXaxis" 
+                                  ItemsSource="{StaticResource Combobox_Gateway_Axis_Values}"
+                                  SelectedValue="{Binding Xaxis, Mode=TwoWay}" />
                     </Grid>
                 </Grid>
 

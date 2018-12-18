@@ -53,6 +53,11 @@
         <Style TargetType="TextBlock" x:Key="SmallTextBlock">
             <Setter Property="FontSize" Value="12" />
         </Style>
-        
+
+        <Style TargetType="TextBlock" x:Key="AlertTextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="Red" />
+        </Style>
+
     </Application.Resources>
 </Application>

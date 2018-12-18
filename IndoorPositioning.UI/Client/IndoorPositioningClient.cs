@@ -24,6 +24,8 @@ namespace IndoorPositioning.UI.Client
 
         private const string ADD_ENVIRONMENT_COMMAND = "add environment ";
 
+        private const string SET_MODE_COMMAND = "set mode ";
+
         #region COMMON METHODS
 
         private static string Get(string command)
@@ -146,6 +148,23 @@ namespace IndoorPositioning.UI.Client
         }
 
         #endregion ENVIRONMENT METHODS
+
+        #region MODE METHODS
+
+        /* sends the command to set the server mode as positioning */
+        public static void SetModeAsPositioning()
+        {
+            Post(SET_MODE_COMMAND + "positioning");
+        }
+
+        /* sends the command to set the server mode as fingerprinting */
+        public static void SetModeAsFingerprinting(int environmentId, int x, int y)
+        {
+            Post(SET_MODE_COMMAND + string.Format($"fingerprinting -env {environmentId} -x {x} -y {y}"));
+        }
+
+        #endregion MODE METHODS
+
 
     }
 }

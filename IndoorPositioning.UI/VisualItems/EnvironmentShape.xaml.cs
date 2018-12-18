@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace IndoorPositioning.UI.VisualItems
 {
+    public delegate void SelectedReferencePointChangedEventHandler(int xaxis, int yaxis);
+    public delegate void AllReferencePointsUnselectedEventHandler();
+
     /// <summary>
     /// Interaction logic for EnvironmentShape.xaml
     /// </summary>
@@ -15,6 +18,26 @@ namespace IndoorPositioning.UI.VisualItems
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        /* This event will be fired when the selection of the reference point changed */
+        public event SelectedReferencePointChangedEventHandler SelectedReferencePointChanged;
+        public void OnSelectedReferencePointChanged()
+        {
+            if (SelectedReferencePointChanged != null)
+            {
+                SelectedReferencePointChanged(SelectedXaxis, SelectedYaxis);
+            }
+        }
+
+        /* All of the reference point on the map were unselected */
+        public event AllReferencePointsUnselectedEventHandler AllReferencePointsUnselected;
+        public void OnAllReferencePointsUnselected()
+        {
+            if (AllReferencePointsUnselected != null)
+            {
+                AllReferencePointsUnselected();
             }
         }
 
@@ -74,6 +97,8 @@ namespace IndoorPositioning.UI.VisualItems
         public int SelectedXaxis { get; set; }
         /* Y-axis of the selected reference point */
         public int SelectedYaxis { get; set; }
+        /* Is there any selected point on the map */
+        public bool IsThereAnySelectedPoint { get; set; }
 
         /* The reference points on the screen are selectable? */
         private bool selectable = true;
@@ -102,7 +127,12 @@ namespace IndoorPositioning.UI.VisualItems
             if (EnvironmentHeight <= 0) return;
             if (EnvironmentWidth <= 0) return;
 
-            /* Remove all reference point items from Canvas */
+            /* Remove all of the reference point items from Canvas */
+            /* PERFORMANCE NOTE:
+             * The items in the canvas have the subscription to the event of ReferencePointSelectionStatusChanged.
+             * But we are removing all without unsubscribing them from the event.
+             * It will cause the memory leak.
+             * */
             canvas.Children.Clear();
 
             for (int i = DistanceBetweenReferencePoints; i < (int)canvas.ActualWidth - ReferencePointShape.SIZE;
@@ -116,8 +146,30 @@ namespace IndoorPositioning.UI.VisualItems
                         Xaxis = i,
                         Yaxis = j
                     };
+                    shape.ReferencePointSelectionStatusChanged += Shape_ReferencePointSelectionStatusChanged;
                     canvas.Children.Add(shape);
                 }
+            }
+        }
+
+        private void Shape_ReferencePointSelectionStatusChanged(bool status, int x, int y)
+        {
+            /* This event is only fired when the reference point is selected
+             * or unselected by clicking on it */
+            IsThereAnySelectedPoint = status;
+            /* If the reference point is selected then change the points */
+            if (status)
+            {
+                SelectedXaxis = x;
+                SelectedYaxis = y;
+
+                /* Notify the subscriber of the event */
+                OnSelectedReferencePointChanged();
+            }
+            else
+            {
+                /* Notify the subscriber of the event */
+                OnAllReferencePointsUnselected();
             }
         }
 

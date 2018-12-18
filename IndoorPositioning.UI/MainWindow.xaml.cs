@@ -1,4 +1,6 @@
-﻿using IndoorPositioning.UI.Screens;
+﻿using IndoorPositioning.UI.Client;
+using IndoorPositioning.UI.Screens;
+using System;
 using System.Windows;
 
 namespace IndoorPositioning.UI
@@ -15,30 +17,61 @@ namespace IndoorPositioning.UI
 
         private void mnItemGateways_Click(object sender, RoutedEventArgs e)
         {
+            /* Set the mode as positioning */
+            try
+            {
+                IndoorPositioningClient.SetModeAsPositioning();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
             var screen = new GatewaysScreen();
             content.Content = screen;
         }
 
         private void mnItemBeacons_Click(object sender, RoutedEventArgs e)
         {
+            /* Set the mode as positioning */
+            try
+            {
+                IndoorPositioningClient.SetModeAsPositioning();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
             var screen = new BeaconsScreen();
             content.Content = screen;
         }
 
         private void mnItemEnvironments_Click(object sender, RoutedEventArgs e)
         {
+            /* Set the mode as positioning */
+            try
+            {
+                IndoorPositioningClient.SetModeAsPositioning();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
             var screen = new EnvironmentsScreen();
             content.Content = screen;
         }
 
         private void mnItemMap_Click(object sender, RoutedEventArgs e)
         {
+            /* Set the mode as positioning */
+            IndoorPositioningClient.SetModeAsPositioning();
+
             var screen = new MapScreen();
             content.Content = screen;
         }
 
         private void mnItemFingerprinting_Click(object sender, RoutedEventArgs e)
         {
+            /* Set the mode as positioning */
+            try
+            {
+                IndoorPositioningClient.SetModeAsPositioning();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
             var screen = new FingerprintingScreen();
             content.Content = screen;
         }

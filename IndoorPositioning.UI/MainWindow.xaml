@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Indoor Positioning" Height="650" Width="800">
+        Title="Indoor Positioning" Height="650" Width="1000">
     <Grid>
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top" x:Name="menu">

@@ -20,18 +20,30 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Fingerprinting" Style="{StaticResource HeaderTextBlock}" />
-
-            <Grid Grid.Column="1" HorizontalAlignment="Right">
+            <TextBlock Grid.Column="0" Text="Fingerprinting" Style="{StaticResource HeaderTextBlock}" />
+            <Ellipse Grid.Column="1" Width="25" Height="25" Fill="{Binding FingerprintingBrush}" Margin="5" />
+            <Grid Grid.Column="2" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="75" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Environment: " />
-                <ComboBox Grid.Column="1" x:Name="cbEnvironments"
+                <TextBlock Grid.Column="0" Text="Beacon: " />
+                <ComboBox Grid.Column="1" x:Name="cbBeacons"
+                          SelectedIndex="{Binding SelectedBeaconIndex, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Grid.Column="2" Text="Environment: " />
+                <ComboBox Grid.Column="3" x:Name="cbEnvironments"
                           SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -39,7 +51,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ToggleButton Grid.Column="2" IsChecked="{Binding FingerprintingActivated, Mode=TwoWay}">
+                <ToggleButton Grid.Column="4" IsChecked="{Binding FingerprintingActivated, Mode=TwoWay}">
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}">
                             <Setter Property="Template">
@@ -89,15 +101,16 @@ If there is no reference point selected, fingerpring will not work"
                        Style="{StaticResource SmallTextBlock}" />
             <TextBlock Grid.Row="3" Text="  3. Free the reference point selected before moving another point" 
                        Style="{StaticResource SmallTextBlock}" />
-            <TextBlock Grid.Row="4" Text="  4. After completing each point, you should be stoping fingerpringing before moving" 
-                       Style="{StaticResource SmallTextBlock}" />
+            <TextBlock Grid.Row="4" x:Name="txtAlert" Style="{StaticResource AlertTextBlock}" />
         </Grid>
 
         <Grid Grid.Row="2">
             <visualitems:EnvironmentShape x:Name="environmentShape"
                                           EnvironmentHeight="{Binding SelectedItem.Height, ElementName=cbEnvironments}"
                                           EnvironmentWidth="{Binding SelectedItem.Width, ElementName=cbEnvironments}"
-                                          DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" />
+                                          DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" 
+                                          SelectedReferencePointChanged="environmentShape_SelectedReferencePointChanged"
+                                          AllReferencePointsUnselected="environmentShape_AllReferencePointsUnselected" />
         </Grid>
     </Grid>
 </UserControl>

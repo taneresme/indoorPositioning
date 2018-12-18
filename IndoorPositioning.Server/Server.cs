@@ -9,6 +9,11 @@ namespace IndoorPositioning.Server
     public class Server : IDisposable
     {
         public static ServerModes ServerMode { get; set; }
+        public static int Fingerprinting_X { get; set; }
+        public static int Fingerprinting_Y { get; set; }
+        public static int Fingerprinting_EnvironmentId { get; set; }
+        public static int Fingerprinting_BeaconId { get; set; }
+        public static string Fingerprinting_BeaconMacAddress { get; set; }
         /* String counterparts of server modes */
         public static Dictionary<string, ServerModes> Modes = new Dictionary<string, ServerModes>()
         {

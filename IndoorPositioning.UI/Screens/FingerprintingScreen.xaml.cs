@@ -3,8 +3,9 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
+using Environment = IndoorPositioning.UI.Model.Environment;
 
 namespace IndoorPositioning.UI.Screens
 {
@@ -37,6 +38,18 @@ namespace IndoorPositioning.UI.Screens
             }
         }
 
+        /* Stores selected index of the beacon combobox */
+        private static int selectedBeaconIndex = -1;
+        public int SelectedBeaconIndex
+        {
+            get { return selectedBeaconIndex; }
+            set
+            {
+                selectedBeaconIndex = value;
+                OnPropertyChanged("SelectedBeaconIndex");
+            }
+        }
+
         /* Stores selected index of the environment combobox */
         private bool fingerprintingActivated = false;
         public bool FingerprintingActivated
@@ -45,7 +58,32 @@ namespace IndoorPositioning.UI.Screens
             set
             {
                 fingerprintingActivated = value;
+                /* Change the server fingerprinting mode */
+                /* Fingerprinting is activated when a reference point is selected,
+                 * not here */
+                if (!fingerprintingActivated)
+                {
+                    DeactivateFingerprinting();
+                    txtAlert.Text = "";
+                }
+                else
+                {
+                    txtAlert.Text = "As soon as you select a reference point on the map, fingerprinting will be activated";
+                }
+                
                 OnPropertyChanged("FingerprintingActivated");
+            }
+        }
+
+        /* This property shows the status of the fingerprinting on the server */
+        private SolidColorBrush fingerprintingBrush = new SolidColorBrush(Colors.Red);
+        public SolidColorBrush FingerprintingBrush
+        {
+            get { return fingerprintingBrush; }
+            set
+            {
+                fingerprintingBrush = value;
+                OnPropertyChanged("FingerprintingBrush");
             }
         }
 
@@ -77,6 +115,7 @@ namespace IndoorPositioning.UI.Screens
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 cbEnvironments.ItemsSource = IndoorPositioningClient.GetEnvironments();
+                cbBeacons.ItemsSource = IndoorPositioningClient.GetBeacons();
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
             catch (Exception ex)
@@ -84,6 +123,59 @@ namespace IndoorPositioning.UI.Screens
                 Mouse.OverrideCursor = Cursors.Arrow;
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void ActivateFingerprinting()
+        {
+            try
+            {
+                /* Send the mode changing request to the server */
+                Environment env = (Environment)cbEnvironments.SelectedItem;
+                IndoorPositioningClient.SetModeAsFingerprinting(env.EnvironmentId, 
+                    environmentShape.SelectedXaxis, environmentShape.SelectedYaxis);
+
+                /* Change the color of the fingerprinting ellipse */
+                FingerprintingBrush = new SolidColorBrush(Colors.Green);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        /* */
+        private void DeactivateFingerprinting()
+        {
+            try
+            {
+                IndoorPositioningClient.SetModeAsPositioning();
+
+                /* Change the color of the fingerprinting ellipse */
+                FingerprintingBrush = new SolidColorBrush(Colors.Red);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        /* This event runs when the selected reference point on the map changed */
+        private void environmentShape_SelectedReferencePointChanged(int xaxis, int yaxis)
+        {
+            /* Check the status of the UI application status to start fingerprinting */
+            if (!FingerprintingActivated) return;
+            /* If the fingerprinting already active on server and
+             * the selected reference point changed before deactivating
+             * fingerprinting then we are deactivating it and showing a message to
+             * inform the user*/
+            if (FingerprintingBrush.Color == Colors.Green)
+            {
+                DeactivateFingerprinting();
+                MessageBox.Show("Fingerprinting deactivated! You first complete " +
+                    "the fingerprinting on the prior reference point and then move on the new one.");
+                return;
+            }
+            ActivateFingerprinting();
+        }
+
+        /* This event runs when the all selected reference point removed/unselected */
+        private void environmentShape_AllReferencePointsUnselected()
+        {
+            DeactivateFingerprinting();
         }
     }
 }

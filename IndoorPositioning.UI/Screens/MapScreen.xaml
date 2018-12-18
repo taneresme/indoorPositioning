@@ -22,9 +22,9 @@
             <Grid Grid.Column="1" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="150" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Environment: " />
                 <ComboBox Grid.Column="1" x:Name="cbEnvironments"

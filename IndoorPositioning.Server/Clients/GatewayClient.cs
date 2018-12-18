@@ -41,19 +41,67 @@ namespace IndoorPositioning.Server.Clients
 
                     CheckGateway(gatewayMac, gatewayType);
                     CheckBeacon(beaconMac, rssi);
+
+                    /* Beahve according to the mode of the server */
+                    if (Server.ServerMode == Enums.ServerModes.Fingerprinting)
+                    {
+                        Fingerprint(gatewayMac, rssi);
+                    }
+                    else if (Server.ServerMode == Enums.ServerModes.Positioning)
+                    {
+                        Position();
+                    }
+                    else
+                    {
+                        // do not nothing.
+                    }
                 }
                 catch (Exception ex)
                 {
                     LOGGER.LogError(ex.ToString());
+                    LOGGER.LogError(data);
                 }
             }
         }
 
+        private void Position()
+        {
+
+        }
+
+        /* Stores the signals with the provided coordinates. */
+        private void Fingerprint(string gatewayMac, int Rssi)
+        {
+            /* If the received signal is not from the beacon to be used fingerprinting, ignore it */
+            if (!Server.Fingerprinting_BeaconMacAddress.Equals(gatewayMac))
+            {
+                return;
+            }
+
+            /* Get gateway */
+            GatewayDao gwDao = new GatewayDao();
+            Gateway gateway = gwDao.GetGateway(gatewayMac);
+
+            FingerprintingDao dao = new FingerprintingDao();
+            Fingerprinting fingerprinting = new Fingerprinting()
+            {
+                GatewayId = gateway.GatewayId,
+                Rssi = Rssi,
+                Timestamp = DateTime.Now,
+                Xaxis = Server.Fingerprinting_X,
+                Yaxis = Server.Fingerprinting_Y,
+                EnvironmentId = Server.Fingerprinting_EnvironmentId
+            };
+            dao.NewFingerprint(fingerprinting);
+        }
+
+        /* Check whether the gateway was registred or now
+         * If not, it will create a new one otherwise updated last RSSI */
         private void CheckGateway(string gatewayMac, string gatewayType)
         {
             /* Check the GW */
-            GatewayDao gatewayDao = new GatewayDao();
-            Gateway gateway = gatewayDao.GetGateway(gatewayMac);
+            GatewayDao dao = new GatewayDao();
+            Gateway gateway = dao.GetGateway(gatewayMac);
             if (gateway == null)
             {
                 /* There is no definition for this GW. 
@@ -68,21 +116,24 @@ namespace IndoorPositioning.Server.Clients
                 };
 
                 /* save new gateway */
-                gatewayDao.NewGateway(gateway);
+                dao.NewGateway(gateway);
             }
             else
             {
                 /* Update beacon */
                 gateway.LastSignalTimestamp = DateTime.Now;
-                gatewayDao.UpdateGateway(gateway);
+                dao.UpdateGateway(gateway);
             }
         }
 
+        /* Check whether the beacon was registred or now
+         * If not, it will create a new one otherwise updated last RSSI
+         * and timestamp */
         private void CheckBeacon(string beaconMac, int rssi)
         {
             /* Check the beacon */
-            BeaconDao beaconDao = new BeaconDao();
-            Beacon beacon = beaconDao.GetBeacon(beaconMac);
+            BeaconDao dao = new BeaconDao();
+            Beacon beacon = dao.GetBeacon(beaconMac);
             if (beacon == null)
             {
                 /* There is no definition for this beacon. 
@@ -95,14 +146,14 @@ namespace IndoorPositioning.Server.Clients
                 };
 
                 /* save new beacon */
-                beaconDao.NewBeacon(beacon);
+                dao.NewBeacon(beacon);
             }
             else
             {
                 /* Update beacon */
                 beacon.LastSignalTimestamp = DateTime.Now;
                 beacon.LastRssi = rssi;
-                beaconDao.UpdateBeacon(beacon);
+                dao.UpdateBeacon(beacon);
             }
         }
     }
