@@ -107,5 +107,32 @@ namespace IndoorPositioning.UI.Screens
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void btnClearAllBeacons_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure to delete this?", "WARNING!", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No) { return; }
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                foreach (Beacon beacon in lstBeacons.Items)
+                {
+                    IndoorPositioningClient.DeleteBeacon(beacon);
+                }
+
+                /* remove selected item */
+                selectedBeacon = null;
+                selectedIndex = 0;
+                /* Load the list again */
+                Load();
+                Mouse.OverrideCursor = Cursors.Arrow;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
