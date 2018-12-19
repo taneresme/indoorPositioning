@@ -118,7 +118,11 @@ namespace IndoorPositioning.UI.Screens
                 Mouse.OverrideCursor = Cursors.Wait;
                 foreach (Beacon beacon in lstBeacons.Items)
                 {
-                    IndoorPositioningClient.DeleteBeacon(beacon);
+                    /* remove all unknown beacons from the server */
+                    if ("unknown".Equals(beacon.Name.ToLower()))
+                    {
+                        IndoorPositioningClient.DeleteBeacon(beacon);
+                    }
                 }
 
                 /* remove selected item */

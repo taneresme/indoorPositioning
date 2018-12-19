@@ -1,4 +1,6 @@
 ﻿using IndoorPositioning.Server.Database.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IndoorPositioning.Server.Database.Dao
 {
@@ -13,6 +15,19 @@ namespace IndoorPositioning.Server.Database.Dao
                 db.SaveChanges();
 
                 return fingerprinting;
+            }
+        }
+
+        /* Gets the fingerprinting records of the given environment */
+        public List<Fingerprinting> GetFingerprinting(int environmentId)
+        {
+            using (IndoorPositioningContext db = new IndoorPositioningContext())
+            {
+                var fingerprintings = db.Fingerprintings
+                    .Where(b => b.EnvironmentId == environmentId)
+                    .ToList();
+
+                return fingerprintings;
             }
         }
     }

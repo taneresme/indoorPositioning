@@ -2,6 +2,7 @@
 using IndoorPositioning.Server.Database.Dao;
 using IndoorPositioning.Server.Database.Model;
 using System.Collections.Generic;
+using System.Text;
 
 namespace IndoorPositioning.Server.Services
 {
@@ -30,6 +31,7 @@ namespace IndoorPositioning.Server.Services
             else if ("gateway".Equals(command)) GetGateway(dataItems);
             else if ("mode".Equals(command)) GetMode();
             else if ("environments".Equals(command)) GetEnvironments();
+            else if ("fingerprinting".Equals(command)) GetFingerprinting(dataItems);
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
@@ -125,6 +127,37 @@ namespace IndoorPositioning.Server.Services
             List<Environment> environments = environmentDao.GetEnvironments();
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(environments);
+            ServiceClient.Send(json);
+        }
+
+        private void GetFingerprinting(string[] dataItems)
+        {
+            /* Create error message */
+            StringBuilder sb = new StringBuilder()
+                .AppendLine(INVALID_PARAMETERS_ERROR)
+                .AppendLine("Sample: get fingerprinting -env 2")
+                .AppendLine("-env: environment id ");
+
+            /* The parameters are valid? */
+            if (dataItems.Length < 4)
+            {
+                ServiceClient.Send(sb.ToString());
+                return;
+            }
+
+            /* Check the parameters */
+            if (!"-env".Equals(dataItems[2]))
+            {
+                ServiceClient.Send(sb.ToString());
+                return;
+            }
+
+            int environmentId = int.Parse(dataItems[3]);
+
+            FingerprintingDao dao = new FingerprintingDao();
+            List<Fingerprinting> fingerprintings = dao.GetFingerprinting(environmentId);
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(fingerprintings);
             ServiceClient.Send(json);
         }
     }

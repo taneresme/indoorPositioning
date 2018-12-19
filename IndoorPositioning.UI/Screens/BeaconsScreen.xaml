@@ -29,7 +29,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Grid.Row="1" Grid.Column="0" Content="Clear All Beacons" Click="btnClearAllBeacons_Click" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Clear Unknowns" Click="btnClearAllBeacons_Click" />
             <Grid Grid.Column="1" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
