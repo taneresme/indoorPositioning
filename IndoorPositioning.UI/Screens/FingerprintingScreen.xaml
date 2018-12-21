@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Beacon: " />
                 <ComboBox Grid.Column="1" x:Name="cbBeacons"
@@ -53,18 +53,7 @@
                 </ComboBox>
                 <ToggleButton Grid.Column="4" IsChecked="{Binding FingerprintingActivated, Mode=TwoWay}">
                     <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="1" Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
+                        <Style TargetType="ToggleButton" BasedOn="{StaticResource BaseToggleButtonStyle}">
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
                                     <Setter Property="Content" Value="Disable" />

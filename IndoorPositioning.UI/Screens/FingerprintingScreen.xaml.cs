@@ -58,6 +58,12 @@ namespace IndoorPositioning.UI.Screens
             get { return fingerprintingActivated; }
             set
             {
+                /* Check the inputs */
+                if(selectedBeaconIndex == -1 || selectedEnvironmentIndex == -1)
+                {
+                    MessageBox.Show("Please do the selections!");
+                    return;
+                }
                 fingerprintingActivated = value;
                 /* Change the server fingerprinting mode */
                 /* Fingerprinting is activated when a reference point is selected,
@@ -147,7 +153,7 @@ namespace IndoorPositioning.UI.Screens
         {
             try
             {
-                IndoorPositioningClient.SetModeAsPositioning();
+                IndoorPositioningClient.SetModeAsIdle();
 
                 /* Change the color of the fingerprinting ellipse */
                 FingerprintingBrush = new SolidColorBrush(Colors.Red);

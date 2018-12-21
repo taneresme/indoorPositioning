@@ -6,6 +6,28 @@
              xmlns:visualitems="clr-namespace:IndoorPositioning.UI.VisualItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!--<ControlTemplate x:Key="PushPinTemplate" TargetType="m:PushPin" >
+            <Grid x:Name="ContentGrid">
+                <StackPanel Orientation="Vertical">
+                    <Grid Background="{TemplateBinding Background}"
+                                                HorizontalAlignment="Left"
+                                                MinHeight="31"
+                                                MinWidth="29">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                               Content="{TemplateBinding Content}"
+                                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                                               Margin="4"/>
+                    </Grid>
+                    <Polygon Fill="{TemplateBinding Background}"
+                                                             Points="0,0 29,0 0,29"
+                                                             Width="29"
+                                                             Height="29"
+                                                             HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+        </ControlTemplate>-->
+    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -17,6 +39,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <TextBlock Text="Map" Style="{StaticResource HeaderTextBlock}" />
 
             <Grid Grid.Column="1" HorizontalAlignment="Right">
@@ -25,9 +48,23 @@
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Environment: " />
-                <ComboBox Grid.Column="1" x:Name="cbEnvironments"
+                
+                <TextBlock Grid.Column="0" Text="Beacon: " />
+                <ComboBox Grid.Column="1" x:Name="cbBeacons"
+                          SelectedIndex="{Binding SelectedBeaconIndex, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+                <TextBlock Grid.Column="2" Text="Environment: " />
+                <ComboBox Grid.Column="3" x:Name="cbEnvironments"
                           SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -36,11 +73,30 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 
-                <TextBlock Grid.Column="2" Text="Algorithm: " />
-                <ComboBox Grid.Column="3" x:Name="cbAlgorithms" 
+                <TextBlock Grid.Column="4" Text="Algorithm: " />
+                <ComboBox Grid.Column="5" x:Name="cbAlgorithms" 
                           SelectedIndex="{Binding SelectedAlgorithmIndex, Mode=TwoWay}">
-                    <ComboBoxItem Content="ML.NET" />
+                    <ComboBoxItem Content="KNN" />
                 </ComboBox>
+
+                <ToggleButton Grid.Column="6" IsChecked="{Binding PositioningActivated, Mode=TwoWay}">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton" BasedOn="{StaticResource BaseToggleButtonStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content" Value="Stop" />
+                                    <Setter Property="ToolTip" Value="Stop positioning" />
+                                    <Setter Property="Background" Value="ForestGreen" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content" Value="Start" />
+                                    <Setter Property="ToolTip" Value="Start positioning" />
+                                    <Setter Property="Background" Value="IndianRed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
             </Grid>
         </Grid>
 

@@ -40,6 +40,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -63,6 +65,9 @@
     <Compile Include="KNN\KnnClassifier.cs" />
     <Compile Include="Screens\FingerprintingScreen.xaml.cs">
       <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VisualItems\BeaconShape.xaml.cs">
+      <DependentUpon>BeaconShape.xaml</DependentUpon>
     </Compile>
     <Compile Include="VisualItems\EnvironmentShape.xaml.cs">
       <DependentUpon>EnvironmentShape.xaml</DependentUpon>
@@ -119,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="VisualItems\BeaconShape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="VisualItems\EnvironmentShape.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

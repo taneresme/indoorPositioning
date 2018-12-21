@@ -13,36 +13,58 @@
 
         <!--Styles-->
         <Style TargetType="Menu">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
 
         <Style TargetType="ComboBox">
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="3" />
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="3" />
         </Style>
 
-        <Style TargetType="ToggleButton">
-            <Setter Property="FontSize" Value="20" />
+        <Style TargetType="ToggleButton" x:Key="BaseToggleButtonStyle">
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Margin" Value="3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="1" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Content" Value="Disable" />
+                    <Setter Property="ToolTip" Value="Deactivate fingerprinting mode" />
+                    <Setter Property="Background" Value="ForestGreen" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Content" Value="Enable" />
+                    <Setter Property="ToolTip" Value="Activate fingerprinting mode" />
+                    <Setter Property="Background" Value="IndianRed" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
         
         <!--Names styles-->

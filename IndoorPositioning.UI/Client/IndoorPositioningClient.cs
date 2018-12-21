@@ -151,16 +151,22 @@ namespace IndoorPositioning.UI.Client
 
         #region MODE METHODS
 
-        /* sends the command to set the server mode as positioning */
-        public static void SetModeAsPositioning()
+        /* sends the command to set the server mode as idle */
+        public static void SetModeAsIdle()
         {
-            Post(SET_MODE_COMMAND + "positioning");
+            Post(SET_MODE_COMMAND + "idle");
         }
 
         /* sends the command to set the server mode as fingerprinting */
         public static void SetModeAsFingerprinting(int beaconId, int environmentId, int x, int y)
         {
             Post(SET_MODE_COMMAND + string.Format($"fingerprinting -env {environmentId} -beacon {beaconId} -x {x} -y {y}"));
+        }
+
+        /* sends the command to set the server mode as positioning */
+        public static void SetModeAsPositioning(int beaconId)
+        {
+            Post(SET_MODE_COMMAND + string.Format($"positioning -beacon {beaconId}"));
         }
 
         #endregion MODE METHODS

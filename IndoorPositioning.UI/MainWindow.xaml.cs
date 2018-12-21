@@ -20,7 +20,7 @@ namespace IndoorPositioning.UI
             /* Set the mode as positioning */
             try
             {
-                IndoorPositioningClient.SetModeAsPositioning();
+                IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
@@ -33,7 +33,7 @@ namespace IndoorPositioning.UI
             /* Set the mode as positioning */
             try
             {
-                IndoorPositioningClient.SetModeAsPositioning();
+                IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
@@ -46,7 +46,7 @@ namespace IndoorPositioning.UI
             /* Set the mode as positioning */
             try
             {
-                IndoorPositioningClient.SetModeAsPositioning();
+                IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
@@ -57,7 +57,7 @@ namespace IndoorPositioning.UI
         private void mnItemMap_Click(object sender, RoutedEventArgs e)
         {
             /* Set the mode as positioning */
-            IndoorPositioningClient.SetModeAsPositioning();
+            IndoorPositioningClient.SetModeAsIdle();
 
             var screen = new MapScreen();
             content.Content = screen;
@@ -68,7 +68,7 @@ namespace IndoorPositioning.UI
             /* Set the mode as positioning */
             try
             {
-                IndoorPositioningClient.SetModeAsPositioning();
+                IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
