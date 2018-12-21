@@ -6,7 +6,6 @@ namespace IndoorPositioning.Beacon.Core
     public class BeaconOperationEventArgs : EventArgs
     {
         public IBeacon Beacon { get; set; }
-        public int Index { get; set; }
         public string LocalAddress { get; set; }
 
         public override string ToString()
@@ -14,7 +13,6 @@ namespace IndoorPositioning.Beacon.Core
             return new StringBuilder()
                 .Append("BeaconOperationEventArgs [ ")
                 .AppendLine("Beacon : " + Beacon.ToString())
-                .AppendLine("Index : " + Index.ToString())
                 .AppendLine("LocalAddress : " + LocalAddress)
                 .Append(" ]")
                 .ToString();

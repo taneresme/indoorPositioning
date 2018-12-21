@@ -16,7 +16,7 @@ namespace IndoorPositioning.Beacon.Bluetooth
                 return string.Join("", BitConverter.GetBytes(AddressAsUlong)
                     .Reverse()
                     .Select(b => b.ToString("X2")))
-                    .Substring(6);
+                    .Substring(4);
             }
         }
         public ulong AddressAsUlong { get; set; }

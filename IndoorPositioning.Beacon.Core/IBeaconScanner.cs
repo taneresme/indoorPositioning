@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 
 namespace IndoorPositioning.Beacon.Core
 {
     public interface IBeaconScanner
     {
-        event EventHandler<BeaconOperationEventArgs> NewBeaconAdded;
-        event EventHandler<BeaconOperationEventArgs> BeaconUpdated;
+        event EventHandler<BeaconOperationEventArgs> BeaconSignalReceived;
 
-        List<IBeacon> Beacons { get; }
         BeaconScannerStatus Status { get; }
         string LocalAddress { get; }
 

@@ -12,4 +12,11 @@
     <AuthenticationMode>None</AuthenticationMode>
     <RemoteDebugMachine>172.20.10.7</RemoteDebugMachine>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <DeviceId>30F105C9-681E-420b-A277-7C086EAD8A4E</DeviceId>
+    <UseEmulator>false</UseEmulator>
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+    <AuthenticationMode>Universal</AuthenticationMode>
+    <RemoteDebugMachine>172.20.10.8</RemoteDebugMachine>
+  </PropertyGroup>
 </Project>

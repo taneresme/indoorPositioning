@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
-using Windows.Networking.Connectivity;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace IndoorPositioning.Raspberry.Scanner
 {
@@ -22,9 +20,11 @@ namespace IndoorPositioning.Raspberry.Scanner
 
         /* Connection details of the client */
         public string LocalIpAddress { get; private set; }
-        public string ServerIpAddress { get; private set; }
+        public string ServerIpAddress { get; private set; } = "172.20.10.6";
         public int Port { get { return PORT; } }
         public bool IsReceiving { get; private set; } = false;
+
+        private bool isConnecting = false;
 
         /* Gives the connection status of the client */
         public bool IsConnected
@@ -43,38 +43,38 @@ namespace IndoorPositioning.Raspberry.Scanner
             DataReceived?.Invoke(data);
         }
 
-        public TcpConnector()
-        {
-            tcpClient = new TcpClient();
-        }
-
         /* Searches the server address and does not return until to connect a server.  */
         public void Connect()
         {
+            if (IsConnected) { return; }
+
+            isConnecting = true;
+            Close();
+            tcpClient = new TcpClient();
+
             /* If it is not connected then wait for the connection */
-            while (true)
-            {
-                var connection = NetworkInformation.GetInternetConnectionProfile();
+            //while (true)
+            //{
+            //    var connection = NetworkInformation.GetInternetConnectionProfile();
 
-                /* Is it connected? */
-                if (connection != null && connection.NetworkAdapter != null)
-                {
-                    var hostname = NetworkInformation.GetHostNames()
-                        .SingleOrDefault(c => c.IPInformation != null &&
-                            c.IPInformation.NetworkAdapter != null &&
-                            c.IPInformation.NetworkAdapter.NetworkAdapterId == connection.NetworkAdapter.NetworkAdapterId);
+            //    /* Is it connected? */
+            //    if (connection != null && connection.NetworkAdapter != null)
+            //    {
+            //        var hostname = NetworkInformation.GetHostNames()
+            //            .SingleOrDefault(c => c.IPInformation != null &&
+            //                c.IPInformation.NetworkAdapter != null &&
+            //                c.IPInformation.NetworkAdapter.NetworkAdapterId == connection.NetworkAdapter.NetworkAdapterId);
 
-                    /* Set ipaddress */
-                    if (hostname != null) { this.LocalIpAddress = hostname.DisplayName; }
+            //        /* Set ipaddress */
+            //        if (hostname != null) { this.LocalIpAddress = hostname.DisplayName; }
 
-                    /* We found the connection */
-                    break;
-                }
-            }
+            //        /* We found the connection */
+            //        break;
+            //    }
+            //}
 
-            var firstPart = LocalIpAddress.Substring(0, LocalIpAddress.LastIndexOf('.'));
-
-            while (true)
+            //var firstPart = LocalIpAddress.Substring(0, LocalIpAddress.LastIndexOf('.'));
+            while (isConnecting)
             {
                 bool isConnected = false;
                 /* Start searching for the server IP to connect */
@@ -82,35 +82,59 @@ namespace IndoorPositioning.Raspberry.Scanner
                 {
                     try
                     {
-                        var serverAddress = string.Format("{0}.{1}", firstPart, i);
-                        /* Try connect to first IP address in the subnet */
-                        tcpClient.Client.Connect(serverAddress, Port);
+                        //var serverAddress = string.Format("{0}.{1}", firstPart, i);
+                        ///* Try connect to first IP address in the subnet */
+                        //tcpClient.Client.Connect(serverAddress, Port);
 
-                        /* If connects successfully, break the loop */
-                        this.ServerIpAddress = serverAddress;
+                        ///* If connects successfully, break the loop */
+                        //this.ServerIpAddress = serverAddress;
+                        tcpClient.Client.Connect(this.ServerIpAddress, Port);
                         isConnected = true;
                         break;
                     }
-                    catch { }
+                    catch (Exception ex) { }
                 }
-                if (isConnected) { break; }
+                if (isConnected)
+                {
+                    break;
+                }
             }
+            /* We are setting the value of isConnecting here
+             * Beacuse it will allow the BeginConnect method callers to make sure
+             * that they are calling Connect method when exactly it is disconnected
+             */
+            isConnecting = false;
+        }
+
+        private async void BeginConnect()
+        {
+            /* If it is already conencting to the server, ignore */
+            if (isConnecting) return;
+            await Task.Run(() => Connect());
         }
 
         /* Sends the given data */
         public void Send(string data)
         {
-            if (tcpClient == null)
-                throw new Exception("tcpClient cannot be null!");
-
             try
             {
+                if (tcpClient == null)
+                    throw new Exception("tcpClient cannot be null!");
+
                 byte[] bytes = Encoding.ASCII.GetBytes(data);
                 tcpClient.Client.Send(bytes, bytes.Length, SocketFlags.None);
             }
+            catch (SocketException ex)
+            {
+                Debug.WriteLine(ex.ToString());
+
+                /* Close connection and reconnect again */
+                Close();
+                BeginConnect();
+            }
             catch (Exception ex)
             {
-                throw ex;
+                Debug.WriteLine(ex.ToString());
             }
         }
 

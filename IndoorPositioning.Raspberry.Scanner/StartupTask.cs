@@ -3,7 +3,6 @@ using Windows.ApplicationModel.Background;
 using System.Diagnostics;
 using IndoorPositioning.Beacon.Core;
 using IndoorPositioning.Beacon.Bluetooth;
-using System.Net.Sockets;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
@@ -29,8 +28,7 @@ namespace IndoorPositioning.Raspberry.Scanner
                 tcpConnector.Connect();
 
                 scanner = new BeaconScanner();
-                scanner.NewBeaconAdded += _scanner_NewBeaconAdded;
-                scanner.BeaconUpdated += _scanner_BeaconUpdated;
+                scanner.BeaconSignalReceived += _scanner_BeaconSignalReceived;
 
                 scanner.Start();
             }
@@ -42,22 +40,11 @@ namespace IndoorPositioning.Raspberry.Scanner
 
         private string CreateMessage(BeaconOperationEventArgs e)
         {
-            return string.Format("{0},{1},{2},{3},", NAME, e.Beacon.Address, e.LocalAddress, e.Beacon.Rssi);
+            return string.Format($"{NAME},{e.Beacon.Address},{e.LocalAddress},{e.Beacon.Rssi},");
         }
 
-        private void _scanner_BeaconUpdated(object sender, BeaconOperationEventArgs e)
+        private void _scanner_BeaconSignalReceived(object sender, BeaconOperationEventArgs e)
         {
-            Debug.WriteLine("_scanner_BeaconUpdated");
-            Debug.WriteLine(e.ToString());
-
-            tcpConnector.Send(CreateMessage(e));
-        }
-
-        private void _scanner_NewBeaconAdded(object sender, BeaconOperationEventArgs e)
-        {
-            Debug.WriteLine("_scanner_NewBeaconAdded");
-            Debug.WriteLine(e.ToString());
-
             tcpConnector.Send(CreateMessage(e));
         }
 

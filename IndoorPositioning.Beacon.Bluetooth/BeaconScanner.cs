@@ -1,8 +1,6 @@
 using IndoorPositioning.Beacon.Core;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.Advertisement;
 
@@ -14,11 +12,7 @@ namespace IndoorPositioning.Beacon.Bluetooth
 
         public BeaconScannerStatus Status { get { return (BeaconScannerStatus)watcher.Status; } }
 
-        public event EventHandler<BeaconOperationEventArgs> NewBeaconAdded;
-        public event EventHandler<BeaconOperationEventArgs> BeaconUpdated;
-
-        private List<IBeacon> beacons = new List<IBeacon>();
-        public List<IBeacon> Beacons { get { return beacons; } }
+        public event EventHandler<BeaconOperationEventArgs> BeaconSignalReceived;
 
         private ulong localAddress;
         public string LocalAddress
@@ -28,7 +22,7 @@ namespace IndoorPositioning.Beacon.Bluetooth
                 return string.Join("", BitConverter.GetBytes(localAddress)
                       .Reverse()
                       .Select(b => b.ToString("X2")))
-                      .Substring(6); ;
+                      .Substring(4); ;
             }
         }
 
@@ -66,54 +60,38 @@ namespace IndoorPositioning.Beacon.Bluetooth
                 UpdatedAt = args.Timestamp.UtcDateTime,
                 Rssi = args.RawSignalStrengthInDBm
             };
-            if (args.Advertisement.ManufacturerData != null)
-            {
-                if (args.Advertisement.ManufacturerData.Count > 0)
-                {
-                    beacon.IsProximityBeacon = true;
-                }
 
-                foreach (var manufacturerData in args.Advertisement.ManufacturerData)
-                {
-                    beacon.ManufacturerData.Add(new BeaconManufacturerData(manufacturerData.CompanyId,
-                        manufacturerData.Data.ToArray()));
-                }
-            }
+            //if (args.Advertisement.ManufacturerData != null)
+            //{
+            //    if (args.Advertisement.ManufacturerData.Count > 0)
+            //    {
+            //        beacon.IsProximityBeacon = true;
+            //    }
 
-            if (args.Advertisement.ServiceUuids != null)
-            {
-                beacon.ServiceUuids.AddRange(args.Advertisement.ServiceUuids);
-            }
+            //    foreach (var manufacturerData in args.Advertisement.ManufacturerData)
+            //    {
+            //        beacon.ManufacturerData.Add(new BeaconManufacturerData(manufacturerData.CompanyId,
+            //            manufacturerData.Data.ToArray()));
+            //    }
+            //}
 
-            if (args.Advertisement.DataSections != null)
-            {
-                foreach (var dataSections in args.Advertisement.DataSections)
-                {
-                    beacon.DataSections.Add(new BeaconDataSection(dataSections.DataType,
-                        dataSections.Data.ToArray()));
-                }
-            }
+            //if (args.Advertisement.ServiceUuids != null)
+            //{
+            //    beacon.ServiceUuids.AddRange(args.Advertisement.ServiceUuids);
+            //}
 
-            for (int i = 0; i < beacons.Count; i++)
-            {
-                if (beacon.Address == beacons[i].Address)
-                {
-                    beacons[i].Update(beacon);
-                    BeaconUpdated(this, new BeaconOperationEventArgs
-                    {
-                        Beacon = beacon,
-                        Index = i,
-                        LocalAddress = this.LocalAddress
-                    });
-                    return;
-                }
-            }
+            //if (args.Advertisement.DataSections != null)
+            //{
+            //    foreach (var dataSections in args.Advertisement.DataSections)
+            //    {
+            //        beacon.DataSections.Add(new BeaconDataSection(dataSections.DataType,
+            //            dataSections.Data.ToArray()));
+            //    }
+            //}
 
-            beacons.Add(beacon);
-            NewBeaconAdded(this, new BeaconOperationEventArgs
+            BeaconSignalReceived(this, new BeaconOperationEventArgs
             {
                 Beacon = beacon,
-                Index = beacons.Count - 1,
                 LocalAddress = this.LocalAddress
             });
         }

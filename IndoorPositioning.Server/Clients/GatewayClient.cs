@@ -38,14 +38,11 @@ namespace IndoorPositioning.Server.Clients
                     string gatewayMac = dataItems[2];
                     int rssi = int.Parse(dataItems[3]);
                     string additionalData = dataItems[4];
-
-                    CheckGateway(gatewayMac, gatewayType);
-                    CheckBeacon(beaconMac, rssi);
-
+                    
                     /* Beahve according to the mode of the server */
                     if (Server.ServerMode == Enums.ServerModes.Fingerprinting)
                     {
-                        Fingerprint(gatewayMac, rssi);
+                        Fingerprint(beaconMac, gatewayMac, rssi);
                     }
                     else if (Server.ServerMode == Enums.ServerModes.Positioning)
                     {
@@ -55,6 +52,9 @@ namespace IndoorPositioning.Server.Clients
                     {
                         // do not nothing.
                     }
+
+                    CheckGateway(gatewayMac, gatewayType);
+                    CheckBeacon(beaconMac, rssi);
                 }
                 catch (Exception ex)
                 {
@@ -70,10 +70,10 @@ namespace IndoorPositioning.Server.Clients
         }
 
         /* Stores the signals with the provided coordinates. */
-        private void Fingerprint(string gatewayMac, int Rssi)
+        private void Fingerprint(string beaconMac, string gatewayMac, int Rssi)
         {
             /* If the received signal is not from the beacon to be used fingerprinting, ignore it */
-            if (!Server.Fingerprinting_BeaconMacAddress.Equals(gatewayMac))
+            if (!Server.Fingerprinting_BeaconMacAddress.Equals(beaconMac))
             {
                 return;
             }
