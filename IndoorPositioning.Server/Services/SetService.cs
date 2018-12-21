@@ -34,7 +34,8 @@ namespace IndoorPositioning.Server.Services
             /* Create error message */
             StringBuilder sb = new StringBuilder()
                 .AppendLine(INVALID_PARAMETERS_ERROR)
-                .AppendLine("Sample: set mode positioning")
+                .AppendLine("Sample: set mode idle")
+                .AppendLine("Sample: set mode positioning -beacon 2")
                 .AppendLine("Sample: set mode fingerprinting -env 2 -beacon 3 -x 10 -y 20")
                 .AppendLine("-env: environment id to be fingerprinted")
                 .AppendLine("-beacon: beacon id to be used for fingerprinting")
@@ -86,7 +87,7 @@ namespace IndoorPositioning.Server.Services
                     return;
                 }
 
-                /* Get coordinates */
+                /* Check the parameters */
                 int envIndex = GetIndex(dataItems, "-env");
                 if (envIndex == -1)
                 {
@@ -127,6 +128,30 @@ namespace IndoorPositioning.Server.Services
                 Server.Fingerprinting_BeaconMacAddress = beacon.MACAddress;
                 Server.Fingerprinting_X = x;
                 Server.Fingerprinting_Y = y;
+            }
+            else if (Server.Modes[mode] == Enums.ServerModes.Positioning)
+            {
+                /* Check the command whether it is valid for positioning */
+                if (dataItems.Length < 5)
+                {
+                    ServiceClient.Send(CreateError_SetMode());
+                    return;
+                }
+                /* Check the parameters */
+                int beaconIndex = GetIndex(dataItems, "-beacon");
+                if (beaconIndex == -1)
+                {
+                    ServiceClient.Send(CreateError_SetMode());
+                    return;
+                }
+
+                int beaconId = int.Parse(dataItems[beaconIndex + 1]);
+                /* Get the mac address of the beacon provided! */
+                BeaconDao dao = new BeaconDao();
+                Beacon beacon = dao.GetBeaconById(beaconId);
+
+                /* Set the beacon to be positioned */
+                Server.Positioning_BeaconId = beaconId;
             }
 
             /* Set mode */

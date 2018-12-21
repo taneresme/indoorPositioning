@@ -14,11 +14,15 @@ namespace IndoorPositioning.Server
         public static int Fingerprinting_EnvironmentId { get; set; }
         public static int Fingerprinting_BeaconId { get; set; }
         public static string Fingerprinting_BeaconMacAddress { get; set; }
+
+        public static int Positioning_BeaconId { get; set; }
+
         /* String counterparts of server modes */
         public static Dictionary<string, ServerModes> Modes = new Dictionary<string, ServerModes>()
         {
             { "positioning", ServerModes.Positioning},
             { "fingerprinting", ServerModes.Fingerprinting},
+            { "idle", ServerModes.Idle},
         };
 
         private List<GatewayClient> gateways = new List<GatewayClient>();
