@@ -63,20 +63,54 @@ namespace IndoorPositioning.UI.Client
             IpAddress = remoteAddress.Split(':')[0];
             Port = int.Parse(remoteAddress.Split(':')[1]);
 
+            Connect();
+        }
+
+        private void Connect()
+        {
             tcpClient = new TcpClient();
             tcpClient.Connect(IpAddress, Port);
+        }
+
+        private bool isConnecting = false;
+        private void BeginConnect()
+        {
+            isConnecting = true;
+            while (isConnecting)
+            {
+                try
+                {
+                    Close();
+                    Connect();
+                    break;
+                }
+                catch { }
+            }
+            isConnecting = false;
         }
 
         /* Sends the given data */
         public void Send(string data)
         {
-            if (tcpClient == null)
-                throw new Exception("tcpClient cannot be null!");
-
             try
             {
+                if (tcpClient == null)
+                    throw new Exception("tcpClient cannot be null!");
+
                 byte[] bytes = Encoding.ASCII.GetBytes(data);
                 tcpClient.Client.Send(bytes, bytes.Length, SocketFlags.None);
+            }
+            catch (SocketException ex)
+            {
+                if (!isConnecting)
+                {
+                    Thread thread = new Thread(BeginConnect)
+                    {
+                        IsBackground = true,
+                    };
+                    thread.Start();
+                }
+                throw ex;
             }
             catch (Exception ex)
             {

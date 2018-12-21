@@ -158,9 +158,9 @@ namespace IndoorPositioning.UI.Client
         }
 
         /* sends the command to set the server mode as fingerprinting */
-        public static void SetModeAsFingerprinting(int environmentId, int x, int y)
+        public static void SetModeAsFingerprinting(int beaconId, int environmentId, int x, int y)
         {
-            Post(SET_MODE_COMMAND + string.Format($"fingerprinting -env {environmentId} -x {x} -y {y}"));
+            Post(SET_MODE_COMMAND + string.Format($"fingerprinting -env {environmentId} -beacon {beaconId} -x {x} -y {y}"));
         }
 
         #endregion MODE METHODS

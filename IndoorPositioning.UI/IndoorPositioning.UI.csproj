@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnvironmentSizeToCanvasSizeConverter.cs" />
     <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
+    <Compile Include="KNN\KnnClassifier.cs" />
     <Compile Include="Screens\FingerprintingScreen.xaml.cs">
       <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
     </Compile>
@@ -162,5 +163,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

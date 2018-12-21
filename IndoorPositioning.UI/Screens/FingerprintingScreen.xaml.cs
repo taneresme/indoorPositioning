@@ -1,4 +1,5 @@
 ﻿using IndoorPositioning.UI.Client;
+using IndoorPositioning.UI.Model;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -131,7 +132,8 @@ namespace IndoorPositioning.UI.Screens
             {
                 /* Send the mode changing request to the server */
                 Environment env = (Environment)cbEnvironments.SelectedItem;
-                IndoorPositioningClient.SetModeAsFingerprinting(env.EnvironmentId, 
+                Beacon beacon = (Beacon)cbBeacons.SelectedItem;
+                IndoorPositioningClient.SetModeAsFingerprinting(beacon.BeaconId, env.EnvironmentId, 
                     environmentShape.SelectedXaxis, environmentShape.SelectedYaxis);
 
                 /* Change the color of the fingerprinting ellipse */
