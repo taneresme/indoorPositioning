@@ -13,8 +13,34 @@ namespace IndoorPositioning.UI.Screens
     /// <summary>
     /// Interaction logic for FingerprintingScreen.xaml
     /// </summary>
-    public partial class FingerprintingScreen : UserControl, INotifyPropertyChanged
+    public partial class FingerprintingScreen : UserControl, INotifyPropertyChanged, IDisposable
     {
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    FingerprintingActivated = false;
+                    Initialized -= MapScreen_Initialized;
+                    Loaded -= MapScreen_Loaded;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion IDisposable Support
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string name)
         {
@@ -59,7 +85,7 @@ namespace IndoorPositioning.UI.Screens
             set
             {
                 /* Check the inputs */
-                if(selectedBeaconIndex == -1 || selectedEnvironmentIndex == -1)
+                if(value && (selectedBeaconIndex == -1 || selectedEnvironmentIndex == -1))
                 {
                     MessageBox.Show("Please do the selections!");
                     return;

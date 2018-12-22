@@ -15,63 +15,81 @@ namespace IndoorPositioning.UI
             InitializeComponent();
         }
 
+        private void DisposeContent()
+        {
+            IDisposable disposable = content.Content as IDisposable;
+            if (disposable != null)
+            {
+                disposable.Dispose();
+            }
+        }
+
         private void mnItemGateways_Click(object sender, RoutedEventArgs e)
         {
-            /* Set the mode as positioning */
+            /* Set the mode as idle */
             try
             {
                 IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
+            DisposeContent();
             var screen = new GatewaysScreen();
             content.Content = screen;
         }
 
         private void mnItemBeacons_Click(object sender, RoutedEventArgs e)
         {
-            /* Set the mode as positioning */
+            /* Set the mode as idle */
             try
             {
                 IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
+            DisposeContent();
             var screen = new BeaconsScreen();
             content.Content = screen;
         }
 
         private void mnItemEnvironments_Click(object sender, RoutedEventArgs e)
         {
-            /* Set the mode as positioning */
+            /* Set the mode as idle */
             try
             {
                 IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
+            DisposeContent();
             var screen = new EnvironmentsScreen();
             content.Content = screen;
         }
 
         private void mnItemMap_Click(object sender, RoutedEventArgs e)
         {
-            /* Set the mode as positioning */
-            IndoorPositioningClient.SetModeAsIdle();
-
-            var screen = new MapScreen();
-            content.Content = screen;
-        }
-
-        private void mnItemFingerprinting_Click(object sender, RoutedEventArgs e)
-        {
-            /* Set the mode as positioning */
+            /* Set the mode as idle */
             try
             {
                 IndoorPositioningClient.SetModeAsIdle();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
+            DisposeContent();
+            var screen = new MapScreen();
+            content.Content = screen;
+        }
+
+        private void mnItemFingerprinting_Click(object sender, RoutedEventArgs e)
+        {
+            /* Set the mode as idle */
+            try
+            {
+                IndoorPositioningClient.SetModeAsIdle();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            DisposeContent();
             var screen = new FingerprintingScreen();
             content.Content = screen;
         }

@@ -11,8 +11,33 @@ namespace IndoorPositioning.UI.Screens
     /// <summary>
     /// Interaction logic for EnvironmentsScreen.xaml
     /// </summary>
-    public partial class EnvironmentsScreen : UserControl
+    public partial class EnvironmentsScreen : UserControl, IDisposable
     {
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Initialized -= BeaconsScreen_Initialized;
+                    Loaded -= BeaconsScreen_Loaded;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion IDisposable Support
+
         private bool initialized = false;
         private Environment selectedEnvironment;
         private int selectedIndex = 0;
@@ -142,30 +167,6 @@ namespace IndoorPositioning.UI.Screens
             e.Handled = !_regex.IsMatch(e.Text);
         }
 
-        private void ChangeCanvasSize()
-        {
-            //if (selectedEnvironment == null) return;
-
-            ///* We are setting the height of the canvas according to the size of screen */
-            //canvasEnvironmentPreview.Height = (double)new EnvironmentSizeToCanvasSizeConverter()
-            //    .Convert(
-            //        new object[] {
-            //            selectedEnvironment.Height,
-            //            selectedEnvironment.Width,
-            //            gridCanvas.ActualHeight, //the container size of the canvas
-            //            gridCanvas.ActualWidth //the container size of the canvas
-            //        }, null, "height", null);
-            ///* We are setting the width of the canvas according to the size of screen */
-            //canvasEnvironmentPreview.Width = (double)new EnvironmentSizeToCanvasSizeConverter()
-            //    .Convert(
-            //        new object[] {
-            //            selectedEnvironment.Height,
-            //            selectedEnvironment.Width,
-            //            gridCanvas.ActualHeight, //the container size of the canvas
-            //            gridCanvas.ActualWidth //the container size of the canvas
-            //        }, null, "width", null);
-        }
-
         private void txtHeightOrWidth_TextChanged(object sender, TextChangedEventArgs e)
         {
             /* If there is no environment in the system, this value will be null. */
@@ -174,10 +175,6 @@ namespace IndoorPositioning.UI.Screens
             /* Check the values of the text boxes whether they are parsable or not */
             if (string.IsNullOrEmpty(txtHeight.Text)) return;
             if (string.IsNullOrEmpty(txtWidth.Text)) return;
-
-            /* Set manually the values because when this event fired, two mode event becomes not fired */
-            //selectedEnvironment.Height = int.Parse(txtHeight.Text);
-            //selectedEnvironment.Width = int.Parse(txtWidth.Text);
         }
     }
 }

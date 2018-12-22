@@ -1,5 +1,4 @@
 ﻿using IndoorPositioning.Server.Clients;
-using IndoorPositioning.Server.Enums;
 using IndoorPositioning.Server.Listener;
 using System;
 using System.Collections.Generic;
@@ -8,23 +7,6 @@ namespace IndoorPositioning.Server
 {
     public class Server : IDisposable
     {
-        public static ServerModes ServerMode { get; set; }
-        public static int Fingerprinting_X { get; set; }
-        public static int Fingerprinting_Y { get; set; }
-        public static int Fingerprinting_EnvironmentId { get; set; }
-        public static int Fingerprinting_BeaconId { get; set; }
-        public static string Fingerprinting_BeaconMacAddress { get; set; }
-
-        public static int Positioning_BeaconId { get; set; }
-
-        /* String counterparts of server modes */
-        public static Dictionary<string, ServerModes> Modes = new Dictionary<string, ServerModes>()
-        {
-            { "positioning", ServerModes.Positioning},
-            { "fingerprinting", ServerModes.Fingerprinting},
-            { "idle", ServerModes.Idle},
-        };
-
         private List<GatewayClient> gateways = new List<GatewayClient>();
         private List<ServiceClient> services = new List<ServiceClient>();
 

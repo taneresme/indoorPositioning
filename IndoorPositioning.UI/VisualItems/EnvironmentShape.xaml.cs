@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace IndoorPositioning.UI.VisualItems
 {
@@ -42,6 +43,7 @@ namespace IndoorPositioning.UI.VisualItems
         }
 
         #region Dependency Properties
+        
 
         /* Width value of the environment */
         public int EnvironmentWidth
@@ -118,6 +120,19 @@ namespace IndoorPositioning.UI.VisualItems
             InitializeComponent();
 
             DataContext = this;
+        }
+
+        private BeaconShape beacon = null;
+        public void MoveBeacon(int xaxis, int yaxis)
+        {
+            if (beacon == null)
+            {
+                beacon = new BeaconShape();
+                canvas.Children.Add(beacon);
+            }
+
+            beacon.Xaxis = xaxis;
+            beacon.Yaxis = yaxis;
         }
 
         private void OrganizeScreen()

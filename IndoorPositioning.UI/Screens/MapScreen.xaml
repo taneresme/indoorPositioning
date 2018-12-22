@@ -7,104 +7,216 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <!--<ControlTemplate x:Key="PushPinTemplate" TargetType="m:PushPin" >
-            <Grid x:Name="ContentGrid">
-                <StackPanel Orientation="Vertical">
-                    <Grid Background="{TemplateBinding Background}"
-                                                HorizontalAlignment="Left"
-                                                MinHeight="31"
-                                                MinWidth="29">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                               Content="{TemplateBinding Content}"
-                                               ContentTemplate="{TemplateBinding ContentTemplate}"
-                                               Margin="4"/>
-                    </Grid>
-                    <Polygon Fill="{TemplateBinding Background}"
-                                                             Points="0,0 29,0 0,29"
-                                                             Width="29"
-                                                             Height="29"
-                                                             HorizontalAlignment="Left"/>
-                </StackPanel>
-            </Grid>
-        </ControlTemplate>-->
+        <Color x:Key="FilledColor" A="255" B="155" R="155" G="155"/>
+        <Color x:Key="UnfilledColor" A="0" B="155" R="155" G="155"/>
+
+        <Style x:Key="BusyAnimationStyle" TargetType="Control">
+            <Setter Property="Background" Value="#7F000000"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Control">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="Animation0" BeginTime="00:00:00.0" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse0" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation1" BeginTime="00:00:00.2" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation2" BeginTime="00:00:00.4" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse2" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation3" BeginTime="00:00:00.6" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse3" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation4" BeginTime="00:00:00.8" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse4" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation5" BeginTime="00:00:01.0" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse5" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation6" BeginTime="00:00:01.2" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse6" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+
+                            <Storyboard x:Key="Animation7" BeginTime="00:00:01.4" RepeatBehavior="Forever">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipse7" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource FilledColor}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsVisible" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation0}" x:Name="Storyboard0" />
+                                    <BeginStoryboard Storyboard="{StaticResource Animation1}" x:Name="Storyboard1"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation2}" x:Name="Storyboard2"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation3}" x:Name="Storyboard3"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation4}" x:Name="Storyboard4"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation5}" x:Name="Storyboard5"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation6}" x:Name="Storyboard6"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Animation7}" x:Name="Storyboard7"/>
+                                </Trigger.EnterActions>
+
+                                <Trigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="Storyboard0"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard1"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard2"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard3"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard4"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard5"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard6"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard7"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Canvas Height="60" Width="60">
+                                    <Canvas.Resources>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Width" Value="15"/>
+                                            <Setter Property="Height" Value="15" />
+                                            <Setter Property="Fill" Value="#009B9B9B" />
+                                        </Style>
+                                    </Canvas.Resources>
+
+                                    <Ellipse x:Name="ellipse0" Canvas.Left="1.75" Canvas.Top="21"/>
+                                    <Ellipse x:Name="ellipse1" Canvas.Top="7" Canvas.Left="6.5"/>
+                                    <Ellipse x:Name="ellipse2" Canvas.Left="20.5" Canvas.Top="0.75"/>
+                                    <Ellipse x:Name="ellipse3" Canvas.Left="34.75" Canvas.Top="6.75"/>
+                                    <Ellipse x:Name="ellipse4" Canvas.Left="40.5" Canvas.Top="20.75" />
+                                    <Ellipse x:Name="ellipse5" Canvas.Left="34.75" Canvas.Top="34.5"/>
+                                    <Ellipse x:Name="ellipse6" Canvas.Left="20.75" Canvas.Top="39.75"/>
+                                    <Ellipse x:Name="ellipse7" Canvas.Top="34.25" Canvas.Left="7" />
+                                    <Ellipse Width="39.5" Height="39.5" Canvas.Left="8.75" Canvas.Top="8" Visibility="Hidden"/>
+                                </Canvas>
+                                <Label Content="{Binding Path=Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="Map" Style="{StaticResource HeaderTextBlock}" />
-
-            <Grid Grid.Column="1" HorizontalAlignment="Right">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
-                <TextBlock Grid.Column="0" Text="Beacon: " />
-                <ComboBox Grid.Column="1" x:Name="cbBeacons"
+
+                <TextBlock Text="Map" Style="{StaticResource HeaderTextBlock}" />
+
+                <Grid Grid.Column="1" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Beacon: " />
+                    <ComboBox Grid.Column="1" x:Name="cbBeacons"
                           SelectedIndex="{Binding SelectedBeaconIndex, Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                
-                <TextBlock Grid.Column="2" Text="Environment: " />
-                <ComboBox Grid.Column="3" x:Name="cbEnvironments"
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="2" Text="Environment: " />
+                    <ComboBox Grid.Column="3" x:Name="cbEnvironments"
                           SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                
-                <TextBlock Grid.Column="4" Text="Algorithm: " />
-                <ComboBox Grid.Column="5" x:Name="cbAlgorithms" 
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="4" Text="Algorithm: " />
+                    <ComboBox Grid.Column="5" x:Name="cbAlgorithms" 
                           SelectedIndex="{Binding SelectedAlgorithmIndex, Mode=TwoWay}">
-                    <ComboBoxItem Content="KNN" />
-                </ComboBox>
+                        <ComboBoxItem Content="KNN" />
+                    </ComboBox>
 
-                <ToggleButton Grid.Column="6" IsChecked="{Binding PositioningActivated, Mode=TwoWay}">
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton" BasedOn="{StaticResource BaseToggleButtonStyle}">
-                            <Style.Triggers>
-                                <Trigger Property="IsChecked" Value="True">
-                                    <Setter Property="Content" Value="Stop" />
-                                    <Setter Property="ToolTip" Value="Stop positioning" />
-                                    <Setter Property="Background" Value="ForestGreen" />
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="False">
-                                    <Setter Property="Content" Value="Start" />
-                                    <Setter Property="ToolTip" Value="Start positioning" />
-                                    <Setter Property="Background" Value="IndianRed" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
+                    <ToggleButton Grid.Column="6" IsChecked="{Binding PositioningActivated, Mode=TwoWay}">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton" BasedOn="{StaticResource BaseToggleButtonStyle}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content" Value="Stop" />
+                                        <Setter Property="ToolTip" Value="Stop positioning" />
+                                        <Setter Property="Background" Value="ForestGreen" />
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Content" Value="Start" />
+                                        <Setter Property="ToolTip" Value="Start positioning" />
+                                        <Setter Property="Background" Value="IndianRed" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                </Grid>
             </Grid>
-        </Grid>
 
-        <Grid Grid.Row="1">
-            <visualitems:EnvironmentShape x:Name="environmentShape" Selectable="False"
+            <Grid Grid.Row="1">
+                <visualitems:EnvironmentShape x:Name="environmentShape" Selectable="False"
                                           EnvironmentHeight="{Binding SelectedItem.Height, ElementName=cbEnvironments}"
                                           EnvironmentWidth="{Binding SelectedItem.Width, ElementName=cbEnvironments}"
                                           DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" />
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <TextBlock x:Name="txtAlert" Style="{StaticResource AlertTextBlock}" />
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="grdPleaseWait" Visibility="Collapsed" Background="White" Opacity="0.4">
+            <Control Style="{StaticResource BusyAnimationStyle}"/>
         </Grid>
     </Grid>
 </UserControl>

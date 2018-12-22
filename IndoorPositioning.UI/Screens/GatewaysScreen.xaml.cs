@@ -12,8 +12,33 @@ namespace IndoorPositioning.UI.Screens
     /// <summary>
     /// Interaction logic for Gateways.xaml
     /// </summary>
-    public partial class GatewaysScreen : UserControl
+    public partial class GatewaysScreen : UserControl, IDisposable
     {
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Initialized -= GatewaysScreen_Initialized;
+                    Loaded -= GatewaysScreen_Loaded;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion IDisposable Support
+
         private bool initialized = false;
         private Gateway selectedGateway;
         private int selectedIndex = 0;

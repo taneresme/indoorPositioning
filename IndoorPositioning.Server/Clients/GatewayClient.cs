@@ -1,6 +1,7 @@
 ﻿using IndoorPositioning.Server.Database.Dao;
 using IndoorPositioning.Server.Database.Model;
 using IndoorPositioning.Server.Logging;
+using IndoorPositioning.Server.Static;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Sockets;
@@ -11,8 +12,10 @@ namespace IndoorPositioning.Server.Clients
     {
         private ILogger LOGGER = Logger.CreateLogger<GatewayClient>();
 
+        private static readonly object locker_positioning = new object();
+
         /* Locker object */
-        private static readonly object locker = new object();
+        private static readonly object locker_dataReceived = new object();
 
         public GatewayClient(TcpClient tcpClient) : base(tcpClient)
         {
@@ -23,7 +26,7 @@ namespace IndoorPositioning.Server.Clients
         public override void DataReceived(string data)
         {
             /* Locking the operation just in case. */
-            lock (locker)
+            lock (locker_dataReceived)
             {
                 try
                 {
@@ -40,17 +43,17 @@ namespace IndoorPositioning.Server.Clients
                     string additionalData = dataItems[4];
                     
                     /* Beahve according to the mode of the server */
-                    if (Server.ServerMode == Enums.ServerModes.Fingerprinting)
+                    if (ServerSettings.ServerMode == Enums.ServerModes.Fingerprinting)
                     {
                         Fingerprint(beaconMac, gatewayMac, rssi);
                     }
-                    else if (Server.ServerMode == Enums.ServerModes.Positioning)
+                    else if (ServerSettings.ServerMode == Enums.ServerModes.Positioning)
                     {
-                        Position();
+                        Position(beaconMac, gatewayMac, rssi);
                     }
                     else
                     {
-                        // do not nothing.
+                        // do nothing.
                     }
 
                     CheckGateway(gatewayMac, gatewayType);
@@ -64,16 +67,26 @@ namespace IndoorPositioning.Server.Clients
             }
         }
 
-        private void Position()
+        private void Position(string beaconMac, string gatewayMac, int rssi)
         {
+            /* If the received signal is not from the beacon to be used positioning, ignore it */
+            if (!PositioningParams.Positioning_BeaconMacAddress.Equals(beaconMac))
+            {
+                return;
+            }
 
+            /* Get gateway */
+            GatewayDao gwDao = new GatewayDao();
+            Gateway gateway = gwDao.GetGateway(gatewayMac);
+
+            PositioningParams.SetRssi(gateway.GatewayId, rssi);
         }
 
         /* Stores the signals with the provided coordinates. */
         private void Fingerprint(string beaconMac, string gatewayMac, int Rssi)
         {
             /* If the received signal is not from the beacon to be used fingerprinting, ignore it */
-            if (!Server.Fingerprinting_BeaconMacAddress.Equals(beaconMac))
+            if (!FingerprintingSettings.Fingerprinting_BeaconMacAddress.Equals(beaconMac))
             {
                 return;
             }
@@ -88,9 +101,9 @@ namespace IndoorPositioning.Server.Clients
                 GatewayId = gateway.GatewayId,
                 Rssi = Rssi,
                 Timestamp = DateTime.Now,
-                Xaxis = Server.Fingerprinting_X,
-                Yaxis = Server.Fingerprinting_Y,
-                EnvironmentId = Server.Fingerprinting_EnvironmentId
+                Xaxis = FingerprintingSettings.Fingerprinting_X,
+                Yaxis = FingerprintingSettings.Fingerprinting_Y,
+                EnvironmentId = FingerprintingSettings.Fingerprinting_EnvironmentId
             };
             dao.NewFingerprint(fingerprinting);
         }

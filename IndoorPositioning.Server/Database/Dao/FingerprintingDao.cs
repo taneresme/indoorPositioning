@@ -25,6 +25,10 @@ namespace IndoorPositioning.Server.Database.Dao
             {
                 var fingerprintings = db.Fingerprintings
                     .Where(b => b.EnvironmentId == environmentId)
+                    .OrderBy(b => b.Xaxis)
+                        .ThenBy(b => b.Yaxis)
+                        .ThenBy(b => b.Timestamp)
+                        .ThenBy(b => b.GatewayId)
                     .ToList();
 
                 return fingerprintings;

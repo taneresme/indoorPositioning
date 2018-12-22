@@ -63,6 +63,7 @@
     <Compile Include="Converters\EnvironmentSizeToCanvasSizeConverter.cs" />
     <Compile Include="Converters\GatewayPositionToCanvasCoordinateConverter.cs" />
     <Compile Include="KNN\KnnClassifier.cs" />
+    <Compile Include="Model\AdjustedFingerprinting.cs" />
     <Compile Include="Screens\FingerprintingScreen.xaml.cs">
       <DependentUpon>FingerprintingScreen.xaml</DependentUpon>
     </Compile>

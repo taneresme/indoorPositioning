@@ -10,8 +10,33 @@ namespace IndoorPositioning.UI.Screens
     /// <summary>
     /// Interaction logic for Beacons.xaml
     /// </summary>
-    public partial class BeaconsScreen : UserControl
+    public partial class BeaconsScreen : UserControl, IDisposable
     {
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Initialized -= BeaconsScreen_Initialized;
+                    Loaded -= BeaconsScreen_Loaded;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        void IDisposable.Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion IDisposable Support
+
         private bool initialized = false;
         private Beacon selectedBeacon;
         private int selectedIndex = 0;

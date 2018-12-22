@@ -1,6 +1,7 @@
 ﻿using IndoorPositioning.Server.Clients;
 using IndoorPositioning.Server.Database.Dao;
 using IndoorPositioning.Server.Database.Model;
+using IndoorPositioning.Server.Static;
 using System.Text;
 
 namespace IndoorPositioning.Server.Services
@@ -41,7 +42,7 @@ namespace IndoorPositioning.Server.Services
                 .AppendLine("-beacon: beacon id to be used for fingerprinting")
                 .AppendLine("-x: x axis")
                 .AppendLine("-y: y axis");
-            foreach (var item in Server.Modes)
+            foreach (var item in ServerSettings.Modes)
             {
                 sb.AppendLine(string.Format($"{item.Key} for {item.Value}"));
             }
@@ -71,14 +72,14 @@ namespace IndoorPositioning.Server.Services
             string mode = dataItems[2];
 
             /* If mode string is invalid */
-            if (!Server.Modes.ContainsKey(mode))
+            if (!ServerSettings.Modes.ContainsKey(mode))
             {
                 ServiceClient.Send(CreateError_SetMode());
                 return;
             }
 
             /* If fingerprinting mode is being tried to set */
-            if (Server.Modes[mode] == Enums.ServerModes.Fingerprinting)
+            if (ServerSettings.Modes[mode] == Enums.ServerModes.Fingerprinting)
             {
                 /* Check the command whether it is valid for the fingerprinting */
                 if (dataItems.Length < 11)
@@ -123,13 +124,13 @@ namespace IndoorPositioning.Server.Services
                 Beacon beacon = dao.GetBeaconById(beaconId);
 
                 /*Set coordinates*/
-                Server.Fingerprinting_EnvironmentId = env;
-                Server.Fingerprinting_BeaconId = beaconId;
-                Server.Fingerprinting_BeaconMacAddress = beacon.MACAddress;
-                Server.Fingerprinting_X = x;
-                Server.Fingerprinting_Y = y;
+                FingerprintingSettings.Fingerprinting_EnvironmentId = env;
+                FingerprintingSettings.Fingerprinting_BeaconId = beaconId;
+                FingerprintingSettings.Fingerprinting_BeaconMacAddress = beacon.MACAddress;
+                FingerprintingSettings.Fingerprinting_X = x;
+                FingerprintingSettings.Fingerprinting_Y = y;
             }
-            else if (Server.Modes[mode] == Enums.ServerModes.Positioning)
+            else if (ServerSettings.Modes[mode] == Enums.ServerModes.Positioning)
             {
                 /* Check the command whether it is valid for positioning */
                 if (dataItems.Length < 5)
@@ -151,11 +152,12 @@ namespace IndoorPositioning.Server.Services
                 Beacon beacon = dao.GetBeaconById(beaconId);
 
                 /* Set the beacon to be positioned */
-                Server.Positioning_BeaconId = beaconId;
+                PositioningParams.Positioning_BeaconId = beaconId;
+                PositioningParams.Positioning_BeaconMacAddress = beacon.MACAddress;
             }
 
             /* Set mode */
-            Server.ServerMode = Server.Modes[mode];
+            ServerSettings.ServerMode = ServerSettings.Modes[mode];
             ServiceClient.Send(OK);
         }
     }

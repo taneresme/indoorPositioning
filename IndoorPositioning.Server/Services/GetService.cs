@@ -1,13 +1,17 @@
 ﻿using IndoorPositioning.Server.Clients;
 using IndoorPositioning.Server.Database.Dao;
 using IndoorPositioning.Server.Database.Model;
+using IndoorPositioning.Server.Static;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IndoorPositioning.Server.Services
 {
     public class GetService : BaseService, IService
     {
+        protected const string NOT_ENOUGH_DATA_FOUND_ERROR = "error: not enough data found!";
+
         public GetService(ServiceClient serviceClient) : base(serviceClient) { }
 
         public void Service(string data)
@@ -32,6 +36,7 @@ namespace IndoorPositioning.Server.Services
             else if ("mode".Equals(command)) GetMode();
             else if ("environments".Equals(command)) GetEnvironments();
             else if ("fingerprinting".Equals(command)) GetFingerprinting(dataItems);
+            else if ("rssi".Equals(command)) GetRssi(dataItems);
             else ServiceClient.Send(UNKNOWN_COMMAND_ERROR);
         }
 
@@ -118,7 +123,7 @@ namespace IndoorPositioning.Server.Services
 
         private void GetMode()
         {
-            ServiceClient.Send(Server.ServerMode.ToString());
+            ServiceClient.Send(ServerSettings.ServerMode.ToString());
         }
 
         private void GetEnvironments()
@@ -160,5 +165,60 @@ namespace IndoorPositioning.Server.Services
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(fingerprintings);
             ServiceClient.Send(json);
         }
+
+        private void GetRssi(string[] dataItems)
+        {
+            /* Create error message */
+            StringBuilder sb = new StringBuilder()
+                .AppendLine(INVALID_PARAMETERS_ERROR)
+                .AppendLine("Sample: get rssi -count 3")
+                .AppendLine("-count: shows the how many RSSI value wanted. ")
+                .AppendLine()
+                .AppendLine("If more than gateway count is provided, error occurs!")
+                .AppendLine("It returns the rssi values of the beacon provided by the command set mode positioning");
+
+            /* The parameters are valid? */
+            if (dataItems.Length < 4)
+            {
+                ServiceClient.Send(sb.ToString());
+                return;
+            }
+
+            /* Check the parameters */
+            if (!"-count".Equals(dataItems[2]))
+            {
+                ServiceClient.Send(sb.ToString());
+                return;
+            }
+
+            int count = int.Parse(dataItems[3]);
+
+            /* ıf the count value is more than the connected gateway count, returns error */
+            if (count > PositioningParams.Positioning_BeaconRssi.Count)
+            {
+                ServiceClient.Send(NOT_ENOUGH_DATA_FOUND_ERROR + " Consider changing parameters for RSSI!");
+                return;
+            }
+
+            /* Get the RSSI values and create a string */
+            RssiValue[] rssiValues = new RssiValue[count];
+            for (int i = 0; i < count; i++)
+            {
+                rssiValues[i] = new RssiValue()
+                {
+                    GatewayId = PositioningParams.Positioning_BeaconRssi.Keys.ToList()[i],
+                    Rssi = PositioningParams.Positioning_BeaconRssi.Values.ToList()[i]
+                };
+            }
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(rssiValues);
+            ServiceClient.Send(json);
+        }
+    }
+
+    public class RssiValue
+    {
+        public int GatewayId { get; set; }
+        public int Rssi { get; set; }
     }
 }
