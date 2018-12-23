@@ -146,6 +146,7 @@ namespace IndoorPositioning.UI.Screens
                     Name = txtName.Text,
                     Width = int.Parse(txtWidth.Text),
                     Height = int.Parse(txtHeight.Text),
+                    DistanceBetweenReferencePoints = int.Parse(txtDistanceBetweenRefPoints.Text),
                     Timestamp = DateTime.Now,
                 };
                 IndoorPositioningClient.AddEnvironment(environment);

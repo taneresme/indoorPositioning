@@ -62,7 +62,7 @@ namespace IndoorPositioning.UI.Screens
         }
 
         /* Stores selected index of the environment combobox */
-        private static int selectedEnvironmentIndex = 0;
+        private static int selectedEnvironmentIndex = -1;
         public int SelectedEnvironmentIndex
         {
             get { return selectedEnvironmentIndex; }
@@ -74,7 +74,7 @@ namespace IndoorPositioning.UI.Screens
         }
 
         /* Stores selected index of the algorithm combobox */
-        private static int selectedAlgorithmIndex = 0;
+        private static int selectedAlgorithmIndex = -1;
         public int SelectedAlgorithmIndex
         {
             get { return selectedAlgorithmIndex; }
@@ -86,7 +86,7 @@ namespace IndoorPositioning.UI.Screens
         }
 
         /* Stores selected index of the beacon combobox */
-        private static int selectedBeaconIndex = 0;
+        private static int selectedBeaconIndex = -1;
         public int SelectedBeaconIndex
         {
             get { return selectedBeaconIndex; }
