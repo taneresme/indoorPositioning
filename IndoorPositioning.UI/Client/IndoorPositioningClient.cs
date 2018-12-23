@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Environment = IndoorPositioning.UI.Model.Environment;
 
 namespace IndoorPositioning.UI.Client
@@ -227,6 +228,12 @@ namespace IndoorPositioning.UI.Client
             {
                 return new List<Coordinate>();
             }
+            /* In every single request, we are setting the hit count as zero.
+             * Because this variable is static and causes problem in the further requests */
+            foreach (var item in points[environmentId])
+            {
+                item.HitCount = 0;
+            }
             return points[environmentId];
         }
 
@@ -285,8 +292,7 @@ namespace IndoorPositioning.UI.Client
                     rssiValue = new RssiValue()
                     {
                         GatewayId = listOfFingerprinting[i].GatewayId,
-                        /* Dividing them by 10 to make the calculation easier */
-                        Rssi = (listOfFingerprinting[i].Rssi / 10.0) * (-1)
+                        Rssi = (listOfFingerprinting[i].Rssi)
                     };
                     adjustedFingerprinting.RssiValueAndGateway.Add(rssiValue);
                 }
@@ -296,23 +302,19 @@ namespace IndoorPositioning.UI.Client
         }
 
         /* gets current rssi values of the beacon provided with command of set mode positioning */
-        public static AdjustedFingerprinting GetRssi(int count)
+        public static RssiValue[] GetRssi(int count)
         {
             string json = Get(string.Format($"{GET_RSSI_COMMAND} -count {count}"));
 
+            Debug.WriteLine(json);
+
             RssiValue[] rssiValues = JsonConvert.DeserializeObject<RssiValue[]>(json);
-            AdjustedFingerprinting fingerprinting = new AdjustedFingerprinting();
-            /* Modify rssi values a bit to facilitate the calculations */
             foreach (var rssi in rssiValues)
             {
-                fingerprinting.RssiValueAndGateway.Add(new RssiValue()
-                {
-                    GatewayId = rssi.GatewayId,
-                    Rssi = (rssi.Rssi / 10.0) * (-1)
-                });
+                rssi.Rssi = (rssi.Rssi);
             }
 
-            return fingerprinting;
+            return rssiValues;
         }
 
         #endregion POSITIONING METHODS

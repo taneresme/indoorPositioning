@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using IndoorPositioning.UI.Converters;
+using IndoorPositioning.UI.Model;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -84,6 +87,17 @@ namespace IndoorPositioning.UI.VisualItems
             DependencyProperty.Register("DistanceBetweenReferencePoints", typeof(int), typeof(EnvironmentShape),
                 new PropertyMetadata(OnPropertyChangedCallback));
 
+        
+        public Gateway[] Gateways
+        {
+            get { return (Gateway[])GetValue(GatewaysProperty); }
+            set { SetValue(GatewaysProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Gateways.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GatewaysProperty =
+            DependencyProperty.Register("Gateways", typeof(Gateway[]), typeof(EnvironmentShape), new PropertyMetadata(null));
+        
 
         /* Notify the other internal properties. */
         private static void OnPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -162,6 +176,45 @@ namespace IndoorPositioning.UI.VisualItems
                         Yaxis = j
                     };
                     shape.ReferencePointSelectionStatusChanged += Shape_ReferencePointSelectionStatusChanged;
+                    canvas.Children.Add(shape);
+                }
+            }
+
+            /* Add gateways to the screen */
+            if (Gateways != null)
+            {
+                foreach (var gateway in Gateways)
+                {
+                    GatewayShape shape = new GatewayShape();
+
+                    /* We are setting the y-axis value
+                     * If the Yaxis value is O, the distance from left will be 0
+                     * If the Yaxis value is N, the distance from left will be the width of the canvas 
+                     * If the Yaxis value is N/2, the distance from left will be the half of the width of the canvas
+                     * The converter class does the action above */
+                    Canvas.SetLeft(shape,
+                        (double)new GatewayPositionToCanvasCoordinateConverter()
+                        .Convert(
+                            new object[] {
+                                gateway.Yaxis,
+                                canvas.ActualHeight,
+                                canvas.ActualWidth
+                            }, null, "width", null));
+
+                    /* We are setting the x-axis value
+                     * If the Xaxis value is O, the distance from top will be 0
+                     * If the Xaxis value is N, the distance from top will be the height of the canvas 
+                     * If the Xaxis value is N/2, the distance from top will be the half of the height of the canvas
+                     * The converter class does the action above */
+                    Canvas.SetTop(shape,
+                        (double)new GatewayPositionToCanvasCoordinateConverter()
+                        .Convert(
+                            new object[] {
+                                gateway.Xaxis,
+                                canvas.ActualHeight,
+                                canvas.ActualWidth
+                            }, null, "height", null));
+                    
                     canvas.Children.Add(shape);
                 }
             }

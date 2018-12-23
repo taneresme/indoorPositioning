@@ -7,9 +7,6 @@
              xmlns:visualitems="clr-namespace:IndoorPositioning.UI.VisualItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-
-    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

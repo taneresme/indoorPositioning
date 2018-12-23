@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="16" d:DesignWidth="16">
     <Grid>
-        <Polygon Width="16" Height="16"  Fill="Red" Stroke="Black" StrokeThickness="2">
+        <Polygon Width="16" Height="16"  Fill="Red" Stroke="Black" StrokeThickness="1">
             <Polygon.Points>
                 <Point X="0" Y="0" />
                 <Point X="16" Y="0" />

@@ -134,8 +134,6 @@ namespace IndoorPositioning.UI.Client
                 } while (data != null);
             }
 
-            Debug.WriteLine(sb.ToString());
-
             return sb.ToString();
         }
 

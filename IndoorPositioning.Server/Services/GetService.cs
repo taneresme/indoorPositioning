@@ -202,6 +202,11 @@ namespace IndoorPositioning.Server.Services
 
             /* Get the RSSI values and create a string */
             RssiValue[] rssiValues = new RssiValue[count];
+
+            /* First we are sorting the dictionary by key. 
+             Because we want to tranmit the data in a order with gateway id */
+            PositioningParams.Positioning_BeaconRssi.OrderBy(p => p.Key);
+
             for (int i = 0; i < count; i++)
             {
                 rssiValues[i] = new RssiValue()

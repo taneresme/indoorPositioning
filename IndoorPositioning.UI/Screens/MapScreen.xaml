@@ -168,7 +168,7 @@
 
                     <TextBlock Grid.Column="2" Text="Environment: " />
                     <ComboBox Grid.Column="3" x:Name="cbEnvironments"
-                          SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
+                              SelectedIndex="{Binding SelectedEnvironmentIndex, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -179,7 +179,9 @@
                     <TextBlock Grid.Column="4" Text="Algorithm: " />
                     <ComboBox Grid.Column="5" x:Name="cbAlgorithms" 
                           SelectedIndex="{Binding SelectedAlgorithmIndex, Mode=TwoWay}">
-                        <ComboBoxItem Content="KNN" />
+                        <ComboBoxItem Content="KNN Classifier" />
+                        <ComboBoxItem Content="KNN Proximity" />
+                        <ComboBoxItem Content="RSSI Proximity" />
                     </ComboBox>
 
                     <ToggleButton Grid.Column="6" IsChecked="{Binding PositioningActivated, Mode=TwoWay}">
@@ -205,9 +207,10 @@
 
             <Grid Grid.Row="1">
                 <visualitems:EnvironmentShape x:Name="environmentShape" Selectable="False"
-                                          EnvironmentHeight="{Binding SelectedItem.Height, ElementName=cbEnvironments}"
-                                          EnvironmentWidth="{Binding SelectedItem.Width, ElementName=cbEnvironments}"
-                                          DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" />
+                                              Gateways="{Binding Gateways}"
+                                              EnvironmentHeight="{Binding SelectedItem.Height, ElementName=cbEnvironments}"
+                                              EnvironmentWidth="{Binding SelectedItem.Width, ElementName=cbEnvironments}"
+                                              DistanceBetweenReferencePoints="{Binding SelectedItem.DistanceBetweenReferencePoints, ElementName=cbEnvironments}" />
             </Grid>
 
             <Grid Grid.Row="2">

@@ -5,7 +5,7 @@ namespace IndoorPositioning.Server.Static
 {
     public class ServerSettings
     {
-        public static ServerModes ServerMode { get; set; }
+        public static ServerModes ServerMode { get; set; } = ServerModes.Idle;
 
         /* String counterparts of server modes */
         public static Dictionary<string, ServerModes> Modes = new Dictionary<string, ServerModes>()

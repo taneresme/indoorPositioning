@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace IndoorPositioning.UI.Model
 {
@@ -21,5 +22,15 @@ namespace IndoorPositioning.UI.Model
         public int Xaxis { get; set; }
         public int Yaxis { get; set; }
         public int HitCount { get; set; }
+
+        public double GetNorm()
+        {
+            return Math.Sqrt(Math.Pow(Xaxis, 2) + Math.Pow(Yaxis, 2));
+        }
+
+        public double GetNormPow()
+        {
+            return Math.Pow(GetNorm(), 2);
+        }
     }
 }
