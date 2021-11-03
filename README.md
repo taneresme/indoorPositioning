@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/taneresme/indoorPositioning.png?branch=master)](https://travis-ci.com/taneresme/indoorPositioning)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cd2c18ccbd7e4d3cb421b6921241686d)](https://www.codacy.com/app/tnr.esme/indoorPositioning/dashboard)
+[![Build Status](https://app.travis-ci.com/taneresme/indoorPositioning.svg?branch=master)](https://travis-ci.com/taneresme/indoorPositioning)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/59e051d2bcc146e58107d8c3ee340b96)](https://www.codacy.com/gh/taneresme/indoorPositioning/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=taneresme/indoorPositioning&amp;utm_campaign=Badge_Grade)
 
 # BLUETOOTH INDOOR POSITIONING USING RASPBERRY PI
 
